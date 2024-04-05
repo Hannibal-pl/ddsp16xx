@@ -1,9 +1,10 @@
 #include <stdio.h>
 #include <stdarg.h>
 #include <stdbool.h>
-#include <stdint.h>
 #include <string.h>
 #include <libgen.h>
+
+#include "ddsp.h"
 
 bool is_bin = false;
 bool is_indent = false;
@@ -409,83 +410,80 @@ void op_do_K(uint16_t word) {
 }
 
 void disassemble(void) {
-	uint16_t word;
-	unsigned opcode;
+	union INSTR word;
 
 	printf("Program listing:\n\n");
 
-	word = next_word();
+	word.i = next_word();
 	while(!feof(file)) {
-		opcode = (word & 0xF800) >> 11;
-
-		switch (opcode) {
+		switch (word.t) {
 			case 0b00000:
 			case 0b00001:
-				op_goto_JA(word);
+				op_goto_JA(word.i);
 				break;
 			case 0b00010:
 			case 0b00011:
-				op_SR_IMM9(word);
+				op_SR_IMM9(word.i);
 				break;
 			case 0b00100:
-				op_F1_Y_aX(word, '1');
+				op_F1_Y_aX(word.i, '1');
 				break;
 			case 0b00110:
-				op_F1_Y(word);
+				op_F1_Y(word.i);
 				break;
 			case 0b00111:
-				op_F1_AT_Y(word);
+				op_F1_AT_Y(word.i);
 				break;
 			case 0b01000:
-				op_a_R(word);
+				op_a_R(word.i);
 				break;
 			case 0b01001:
-				op_R_aX(word, '0');
+				op_R_aX(word.i, '0');
 				break;
 			case 0b01010:
-				op_R_IMM16(word);
+				op_R_IMM16(word.i);
 				break;
 			case 0b01011:
-				op_R_aX(word, '1');
+				op_R_aX(word.i, '1');
 				break;
 			case 0b01100:
-				op_Y_R(word);
+				op_Y_R(word.i);
 				break;
 			case 0b01110:
-				op_do_K(word);
+				op_do_K(word.i);
 				break;
 			case 0b01111:
-				op_R_Y(word);
+				op_R_Y(word.i);
 				break;
 			case 0b10000:
 			case 0b10001:
-				op_call_JA(word);
+				op_call_JA(word.i);
 				break;
 			case 0b10010:
-				op_ifc_CON_F2(word);
+				op_ifc_CON_F2(word.i);
 				break;
 			case 0b10011:
-				op_if_CON_F2(word);
+				op_if_CON_F2(word.i);
 				break;
 			case 0b10100:
-				op_F1_Y_y(word);
+				op_F1_Y_y(word.i);
 				break;
 			case 0b10111:
-				op_F1_y_Y(word);
+				op_F1_y_Y(word.i);
 				break;
 			case 0b11000:
-				op_gotoB(word);
+				op_gotoB(word.i);
 				break;
 			case 0b11010:
-				op_if_branch(word);
+				op_if_branch(word.i);
 				break;
 			case 0b11100:
-				op_F1_Y_aX(word, '0');
+				op_F1_Y_aX(word.i, '0');
 				break;
 			case 0b11111:
-				op_F1_y_Y_x(word);
+				op_F1_y_Y_x(word.i);
 			default:
-				oprintf("unknown opcode 0b%05b param 0x%04x", opcode, (word & 0x0FFF));
+				oprintf("unknown opcode 0b%05b param 0x%04x", word.t, (word.i & 0x0FFF));
 				break;
 		}
 		printf("\n");
@@ -497,7 +495,7 @@ void disassemble(void) {
 			}
 		}
 
-		word = next_word();
+		word.i = next_word();
 	}
 
 	printf("\nProgram end:\n");
