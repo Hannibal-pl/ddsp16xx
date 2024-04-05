@@ -1,7 +1,20 @@
+CC=gcc
+CFLAGS=-Wall -g -std=gnu99 -flto
+INCLUDES=-I/usr/include
+LIBS=-lm
+MOD=ddsp.o instructions.o tools.o
+
 all: ddsp
 
-ddsp: ddsp.c ddsp.h
-	gcc ddsp.c -Wall -o ddsp
+$(MOD): %.o: %.c ddsp.h
+	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+
+ddsp: $(MOD)
+	$(CC) $(CFLAGS) $(LIBS) -o ddsp $(MOD)
 
 clean:
-	rm ddsp
+	rm -f *o ddsp
+
+rebuild: clean all
+
+.PHONY: all clean rebuild

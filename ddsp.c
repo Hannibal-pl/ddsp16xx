@@ -1,19 +1,27 @@
-#include <stdio.h>
-#include <stdarg.h>
-#include <stdbool.h>
 #include <string.h>
 #include <libgen.h>
 
 #include "ddsp.h"
 
-bool is_bin = false;
-bool is_indent = false;
-bool is_org = true;
-int loop_n = 0;
-FILE *file = NULL;
-unsigned size = 0;
-uint16_t org_start = 0;
-uint16_t org_cur = 0;
+//bool is_bin = false;
+//bool is_indent = false;
+//bool is_org = true;
+//int loop_n = 0;
+//FILE *file = NULL;
+//unsigned size = 0;
+//uint16_t org_start = 0;
+//uint16_t org_cur = 0;
+
+struct CONTEXT context = {
+	.file = NULL,
+	.size = 0,
+	.org_start = 0,
+	.org_cur = 0,
+	.is_bin = false,
+	.is_indent = false,
+	.is_org = true,
+	.loop_n = 0,
+};
 
 char *string_CON[32] = {	"mi",
 				"pl",
@@ -162,13 +170,13 @@ void usage(char *binary) {
 
 uint16_t next_word(void) {
 	uint16_t word;
-	fread(&word, sizeof(word), 1, file);
-	org_cur ++;
+	fread(&word, sizeof(word), 1, context.file);
+	context.org_cur++;
 
 	return word;
 }
 
-unsigned get_page(void) {
+/*unsigned get_page(void) {
 	return (org_cur & 0xF000);
 }
 
@@ -183,7 +191,7 @@ void oprintf(char* format, ...) {
 	}
 	vprintf(format, ap);
 	va_end(ap);
-}
+}*/
 
 void decode_F1(unsigned F1, bool D, bool S, bool is_semi) {
 	if (is_semi){
@@ -252,10 +260,6 @@ void decode_Y(unsigned Y, bool is_semi) {
 			printf("*r%c++j", reg);
 			break;
 	}
-}
-
-void op_goto_JA(uint16_t word) {
-	oprintf("goto 0x%04X", get_page() | (word & 0x0FFF));
 }
 
 void op_call_JA(uint16_t word) {
@@ -333,14 +337,14 @@ void op_if_branch(uint16_t word) {
 	}
 	oprintf("test; if %s { ", string_CON[word & 0x001F]);
 
-	is_org = false;
+	context.is_org = false;
 
 	wordb = next_word();
 	opcodeb = (wordb & 0xF800) >> 11;
 	switch (opcodeb) {
 		case 0b00000:
 		case 0b00001:
-			op_goto_JA(wordb);
+			instr_b00000(wordb);
 			break;
 		case 0b11000:
 			op_gotoB(wordb);
@@ -350,7 +354,7 @@ void op_if_branch(uint16_t word) {
 			break;
 	}
 
-	is_org = true;
+	context.is_org = true;
 
 	printf(" }");
 }
@@ -405,8 +409,8 @@ void op_do_K(uint16_t word) {
 		return;
 	}
 	oprintf("do %i [%i]{", k, n);
-	loop_n = n + 1;
-	is_indent = true;
+	context.loop_n = n + 1;
+	context.is_indent = true;
 }
 
 void disassemble(void) {
@@ -415,11 +419,11 @@ void disassemble(void) {
 	printf("Program listing:\n\n");
 
 	word.i = next_word();
-	while(!feof(file)) {
+	while(!feof(context.file)) {
 		switch (word.t) {
 			case 0b00000:
 			case 0b00001:
-				op_goto_JA(word.i);
+				instr_b00000(word.i);
 				break;
 			case 0b00010:
 			case 0b00011:
@@ -482,15 +486,16 @@ void disassemble(void) {
 				break;
 			case 0b11111:
 				op_F1_y_Y_x(word.i);
+				break;
 			default:
 				oprintf("unknown opcode 0b%05b param 0x%04x", word.t, (word.i & 0x0FFF));
 				break;
 		}
 		printf("\n");
 
-		if (loop_n > 0) {
-			if ((--loop_n) == 0) {
-				is_indent = false;
+		if (context.loop_n > 0) {
+			if ((--context.loop_n) == 0) {
+				context.is_indent = false;
 				oprintf("}\n");
 			}
 		}
@@ -507,37 +512,37 @@ int main(int argc, char *argv[]) {
 		return 1;
 	}
 	if (!strncmp(argv[1], "bin", 3)) {
-		is_bin = true;
+		context.is_bin = true;
 	} else if (!strncmp(argv[1], "raw", 3)) {
-		is_bin = false;
+		context.is_bin = false;
 	} else {
 		printf("Unknown file format: %s\n\n", argv[1]);
 		usage(argv[0]);
 		return 1;
 	}
 
-	file = fopen(argv[2], "r");
-	if (file == NULL) {
+	context.file = fopen(argv[2], "r");
+	if (context.file == NULL) {
 		printf("Input file not found: %s\n\n", argv[2]);
 		usage(argv[0]);
 		return 1;
 	}
 
-	fseek(file, 0, SEEK_END);
-	size = ftell(file) >> 1;
-	size -= is_bin ? 3 : 0;
+	fseek(context.file, 0, SEEK_END);
+	context.size = ftell(context.file) >> 1;
+	context.size -= context.is_bin ? 3 : 0;
 
-	if (is_bin) {
-		fseek(file, 0, SEEK_SET);
-		fread(&org_start, sizeof(org_start), 1, file);
-		org_cur = org_start;
+	if (context.is_bin) {
+		fseek(context.file, 0, SEEK_SET);
+		fread(&context.org_start, sizeof(context.org_start), 1, context.file);
+		context.org_cur = context.org_start - 1;
 	}
 
-	fseek(file, is_bin ? 6 : 0, SEEK_SET);
+	fseek(context.file, context.is_bin ? 6 : 0, SEEK_SET);
 
-	printf("Program size is %u words long orgins is 0x%04X\n\n", size, org_start);
+	printf("Program size is %u words long orgins is 0x%04X\n\n", context.size, context.org_start);
 	disassemble();
 
-	fclose(file);
+	fclose(context.file);
 	return 0;
 }
