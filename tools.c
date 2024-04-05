@@ -3,6 +3,13 @@
 
 #include "ddsp.h"
 
+uint16_t next_word(void) {
+	uint16_t word;
+	fread(&word, sizeof(word), 1, context.file);
+	context.org_cur++;
+
+	return word;
+}
 
 uint16_t get_page(void) {
 	return (context.org_cur & 0xF000);
@@ -14,7 +21,7 @@ void oprintf(char* format, ...) {
 	if (context.is_org) {
 		printf("0x%04X:    ", context.org_cur);
 	}
-	if (context.is_indent) {
+	for (int i = 0; i < context.indent; i++) {
 		printf("    ");
 	}
 	vprintf(format, ap);
