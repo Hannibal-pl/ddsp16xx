@@ -430,10 +430,12 @@ void disassemble(void) {
 				op_SR_IMM9(word.i);
 				break;
 			case 0b00100:
-				op_F1_Y_aX(word.i, '1');
+				instr_b00100(word.i);
+//				op_F1_Y_aX(word.i, '1');
 				break;
 			case 0b00110:
-				op_F1_Y(word.i);
+//				op_F1_Y(word.i);
+				instr_b00110(word.i);
 				break;
 			case 0b00111:
 				op_F1_AT_Y(word.i);
@@ -461,7 +463,8 @@ void disassemble(void) {
 				break;
 			case 0b10000:
 			case 0b10001:
-				op_call_JA(word.i);
+				instr_b10000(word.i);
+//				op_call_JA(word.i);
 				break;
 			case 0b10010:
 				op_ifc_CON_F2(word.i);
@@ -482,7 +485,8 @@ void disassemble(void) {
 				op_if_branch(word.i);
 				break;
 			case 0b11100:
-				op_F1_Y_aX(word.i, '0');
+				instr_b11100(word.i);
+//				op_F1_Y_aX(word.i, '0');
 				break;
 			case 0b11111:
 				op_F1_y_Y_x(word.i);

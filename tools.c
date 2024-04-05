@@ -1,4 +1,5 @@
 #include <stdarg.h>
+#include <string.h>
 
 #include "ddsp.h"
 
@@ -18,4 +19,19 @@ void oprintf(char* format, ...) {
 	}
 	vprintf(format, ap);
 	va_end(ap);
+}
+
+void oprintbuf(char *buf) {
+	char *cur = buf;
+	char *next;
+
+	if (strlen(buf) == 0) {
+		return;
+	}
+	while((next = strchr(cur, '#')) != NULL) {
+		next[0] = 0;
+		oprintf("%s\n", cur);
+		cur = next + 1;
+	}
+	oprintf("%s\n", cur);
 }
