@@ -186,8 +186,12 @@ extern void instr_b01111(uint16_t word);
 extern void instr_b10000(uint16_t word);
 extern void instr_b10010(uint16_t word);
 extern void instr_b10011(uint16_t word);
+extern void instr_b10100(uint16_t word);
+extern void instr_b10110(uint16_t word);
+extern void instr_b10111(uint16_t word);
 extern void instr_b11000(uint16_t word);
 extern void instr_b11010(uint16_t word);
 extern void instr_b11100(uint16_t word);
+extern void instr_b11111(uint16_t word);
 
 #endif

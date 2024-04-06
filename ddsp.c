@@ -150,96 +150,6 @@ void usage(char *binary) {
 	printf("Usage: %s [bin|raw] filename\n", basename(binary));
 }
 
-void decode_F1(unsigned F1, bool D, bool S, bool is_semi) {
-	if (is_semi){
-		printf("; ");
-	}
-
-	printf(string_F1[F1 & 0xF], D ? 1 : 0, S ? 1 : 0);
-}
-
-void decode_F2(unsigned F2, bool D, bool S, bool is_semi) {
-	if (is_semi){
-		printf("; ");
-	}
-
-	printf(string_F2[F2 & 0xF], D ? 1 : 0, S ? 1 : 0);
-}
-
-void decode_AT(bool D, bool X, unsigned Y, bool is_semi) {
-	char reg = '0' + ((Y & 0xC) >> 2);
-
-	if (is_semi){
-		printf("; ");
-	}
-
-	printf("a%s%s = *r%c",D ? "0" : "1" ,X ? "l" : "", reg);
-}
-
-void decode_yY(bool X, unsigned Y, bool is_semi) {
-	char reg = '0' + ((Y & 0xC) >> 2);
-
-	if (is_semi){
-		printf("; ");
-	}
-
-	printf("y%s = *r%c", X ? "l" : "", reg);
-}
-
-void decode_Yy(bool X, unsigned Y, bool is_semi) {
-	char reg = '0' + ((Y & 0xC) >> 2);
-
-	if (is_semi){
-		printf("; ");
-	}
-
-	printf("*r%c = y%s", reg, X ? "l" : "");
-}
-
-void decode_Y(unsigned Y, bool is_semi) {
-	char reg = '0' + ((Y & 0xC) >> 2);
-
-	if (is_semi){
-		printf("; ");
-	}
-
-	switch (Y & 0x3) {
-		case 0b00:
-			printf("nop");
-			break;
-		case 0b01:
-			printf("*r%c++", reg);
-			break;
-		case 0b10:
-			printf("*r%c--", reg);
-			break;
-		case 0b11:
-			printf("*r%c++j", reg);
-			break;
-	}
-}
-
-void op_F1_y_Y(uint16_t word) {
-	oprintf("");
-	decode_F1((word & 0x01E0) >> 5, word & 0x0400, word & 0x0200, false);
-	decode_yY(word & 0x0010 ,word & 0x000F, true);
-	decode_Y(word & 0x000F, true);
-}
-
-void op_F1_y_Y_x(uint16_t word) {
-	oprintf("");
-	decode_F1((word & 0x01E0) >> 5, word & 0x0400, word & 0x0200, false);
-	decode_Y(word & 0x000F, true);
-	printf("; x = *pt; pt++%s", (word & 0x0010) ? "i" : "");
-}
-
-void op_F1_Y_y(uint16_t word) {
-	oprintf("");
-	decode_F1((word & 0x01E0) >> 5, word & 0x0400, word & 0x0200, false);
-	decode_Yy(word & 0x0010 ,word & 0x000F, true);
-	decode_Y(word & 0x000F, true);
-}
-
 void disassemble(void) {
 	union INSTR word;
 
@@ -298,12 +208,13 @@ void disassemble(void) {
 				instr_b10011(word.i);
 				break;
 			case 0b10100:
-				op_F1_Y_y(word.i);
-		printf("\n");
+				instr_b10100(word.i);
+				break;
+			case 0b10110:
+				instr_b10110(word.i);
 				break;
 			case 0b10111:
-				op_F1_y_Y(word.i);
-		printf("\n");
+				instr_b10111(word.i);
 				break;
 			case 0b11000:
 				instr_b11000(word.i);
@@ -315,8 +226,7 @@ void disassemble(void) {
 				instr_b11100(word.i);
 				break;
 			case 0b11111:
-				op_F1_y_Y_x(word.i);
-		printf("\n");
+				instr_b11111(word.i);
 				break;
 			default:
 				oprintf("unknown opcode 0b%05b param 0x%04x\n", word.t, word.p);
