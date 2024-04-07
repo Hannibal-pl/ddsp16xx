@@ -201,6 +201,7 @@ extern void instr_b10111(uint16_t word);
 extern void instr_b11000(uint16_t word);
 extern void instr_b11010(uint16_t word);
 extern void instr_b11100(uint16_t word);
+extern void instr_b11101(uint16_t word);
 extern void instr_b11111(uint16_t word);
 //cmdline:
 extern void parseparams(int argc, char *argv[]);

@@ -346,6 +346,27 @@ void instr_b11100(uint16_t word) {
 	oprintbuf(buf_Y);
 }
 
+void instr_b11101(uint16_t word) {
+	union INSTR_F1 instr;
+	char buf_F1[64];
+	char buf_Z[16];
+
+	instr.i = word;
+
+	field_F1(buf_F1, sizeof(buf_F1), instr.f1, instr.d, instr.s);
+	oprintbuf(buf_F1);
+
+	oprintf("tmp = y\n");
+	oprintf("y = *r%i\n", instr.yzReg);
+	field_Z1(buf_Z, sizeof(buf_Z), instr.yzReg, instr.yzOp);
+	oprintbuf(buf_Z);
+	oprintf("*r%i = temp", instr.yzReg);
+	field_Z2(buf_Z, sizeof(buf_Z), instr.yzReg, instr.yzOp);
+	oprintbuf(buf_Z);
+	oprintf("x = *pt\n");
+	oprintf("pt++%s", instr.x ? "i" : "");
+}
+
 void instr_b11111(uint16_t word) {
 	union INSTR_F1 instr;
 	char buf_F1[64];
