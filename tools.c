@@ -42,3 +42,33 @@ void oprintbuf(char *buf) {
 	}
 	oprintf("%s\n", cur);
 }
+
+void check_crc(void) {
+	uint32_t fpos;
+	uint16_t size;
+	uint16_t crc;
+	uint16_t val;
+
+	if (!context.is_bin) {
+		return;
+	}
+
+	fpos = ftell(context.file);
+
+	fseek(context.file, 2, SEEK_SET);
+	fread(&size, sizeof(size), 1, context.file);
+	fread(&crc, sizeof(crc), 1, context.file);
+	printf("Control sum 0x%04X - ", crc);
+	for (int i = 0; i < size; i ++) {
+		fread(&val, sizeof(val), 1, context.file);
+		crc ^= val;
+	}
+
+	if (crc == 0) {
+		printf("OK\n");
+	} else {
+		printf("FAILED\n");
+	}
+
+	fseek(context.file, fpos, SEEK_SET);
+}

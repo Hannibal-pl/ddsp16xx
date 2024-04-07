@@ -2,7 +2,7 @@ CC=gcc
 CFLAGS=-Wall -g -std=gnu99 -flto
 INCLUDES=-I/usr/include
 LIBS=-lm
-MOD=ddsp.o fields.o instructions.o tools.o
+MOD=cmdline.o ddsp.o fields.o instructions.o tools.o
 
 all: ddsp
 

@@ -8,9 +8,12 @@ struct CONTEXT context = {
 	.size = 0,
 	.org_start = 0,
 	.org_cur = 0,
-	.is_bin = false,
+	.is_bin = true,
+	.is_crc = false,
 	.indent = 0,
 	.is_org = true,
+	.is_org_cmdline = false,
+	.check_crc = false,
 	.loop_n = 0,
 };
 
@@ -115,32 +118,13 @@ void disassemble(void) {
 }
 
 int main(int argc, char *argv[]) {
-	if (argc < 3) {
-		usage(argv[0]);
-		return 1;
-	}
-	if (!strncmp(argv[1], "bin", 3)) {
-		context.is_bin = true;
-	} else if (!strncmp(argv[1], "raw", 3)) {
-		context.is_bin = false;
-	} else {
-		printf("Unknown file format: %s\n\n", argv[1]);
-		usage(argv[0]);
-		return 1;
-	}
-
-	context.file = fopen(argv[2], "r");
-	if (context.file == NULL) {
-		printf("Input file not found: %s\n\n", argv[2]);
-		usage(argv[0]);
-		return 1;
-	}
+	parseparams(argc, argv);
 
 	fseek(context.file, 0, SEEK_END);
 	context.size = ftell(context.file) >> 1;
 	context.size -= context.is_bin ? 3 : 0;
 
-	if (context.is_bin) {
+	if (context.is_bin && !context.is_org_cmdline) {
 		fseek(context.file, 0, SEEK_SET);
 		fread(&context.org_start, sizeof(context.org_start), 1, context.file);
 		context.org_cur = context.org_start - 1;
@@ -148,7 +132,10 @@ int main(int argc, char *argv[]) {
 
 	fseek(context.file, context.is_bin ? 6 : 0, SEEK_SET);
 
-	printf("Program size is %u words long orgins is 0x%04X\n\n", context.size, context.org_start);
+	if (context.check_crc) {
+		check_crc();
+	}
+	printf("Program size is %u words long orgin is 0x%04X%s\n\n", context.size, context.org_start, context.is_org_cmdline ? " (manual)" : "");
 	disassemble();
 
 	fclose(context.file);

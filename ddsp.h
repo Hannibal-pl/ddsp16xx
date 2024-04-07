@@ -5,15 +5,19 @@
 #include <stdbool.h>
 #include <stdio.h>
 
+#define VERSION			"0.1.0"
+
 struct CONTEXT {
 	FILE *file;
 	unsigned size;
 	uint16_t org_start;
 	uint16_t org_cur;
 	bool is_bin;
-//	bool is_indent;
+	bool is_crc;
 	unsigned indent;
 	bool is_org;
+	bool is_org_cmdline;
+	bool check_crc;
 	unsigned loop_n;
 };
 
@@ -162,6 +166,7 @@ extern uint16_t next_word(void);
 extern uint16_t get_page(void);
 extern void oprintf(char* format, ...);
 extern void oprintbuf(char *buf);
+extern void check_crc(void);
 //fields:
 extern unsigned field_B(char *buf, unsigned bufsize, unsigned B);
 extern char * field_CON(unsigned con);
@@ -193,5 +198,7 @@ extern void instr_b11000(uint16_t word);
 extern void instr_b11010(uint16_t word);
 extern void instr_b11100(uint16_t word);
 extern void instr_b11111(uint16_t word);
+//cmdline:
+extern void parseparams(int argc, char *argv[]);
 
 #endif
