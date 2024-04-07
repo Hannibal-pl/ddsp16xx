@@ -32,8 +32,8 @@ union INSTR {
 union INSTR_F1 {
 	uint16_t i;
 	struct {
-		unsigned yOp:2;
-		unsigned yReg:2;
+		unsigned yzOp:2;
+		unsigned yzReg:2;
 		unsigned x:1;
 		unsigned f1:4;
 		unsigned s:1;
@@ -97,8 +97,8 @@ union INSTR_F6 {
 union INSTR_F7 {
 	uint16_t i;
 	struct {
-		unsigned yOp:2;
-		unsigned yReg:2;
+		unsigned yzOp:2;
+		unsigned yzReg:2;
 		unsigned r:6;
 		unsigned aT:1;
 		unsigned t:5;
@@ -176,6 +176,8 @@ extern unsigned field_F3(char *buf, unsigned bufsize, unsigned F3, unsigned D, u
 extern char * field_R(unsigned r);
 extern char * field_SR(unsigned sr);
 extern unsigned field_Y(char *buf, unsigned bufsize, unsigned reg, unsigned op);
+extern unsigned field_Z1(char *buf, unsigned bufsize, unsigned reg, unsigned op);
+extern unsigned field_Z2(char *buf, unsigned bufsize, unsigned reg, unsigned op);
 //instructions:
 extern void instr_b00000(uint16_t word);
 extern void instr_b00010(uint16_t word);
@@ -186,6 +188,7 @@ extern void instr_b01000(uint16_t word);
 extern void instr_b01001(uint16_t word);
 extern void instr_b01010(uint16_t word);
 extern void instr_b01100(uint16_t word);
+extern void instr_b01101(uint16_t word);
 extern void instr_b01110(uint16_t word);
 extern void instr_b01111(uint16_t word);
 extern void instr_b10000(uint16_t word);

@@ -62,6 +62,9 @@ void disassemble(void) {
 			case 0b01100:
 				instr_b01100(word.i);
 				break;
+			case 0b01101:
+				instr_b01100(word.i);
+				break;
 			case 0b01110:
 				instr_b01110(word.i);
 				break;

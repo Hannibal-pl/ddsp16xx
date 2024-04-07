@@ -230,3 +230,28 @@ unsigned field_Y(char *buf, unsigned bufsize, unsigned reg, unsigned op) {
 	snprintf(buf, bufsize, format_Y[op & 0x3], reg);
 	return strlen(buf);
 }
+
+
+
+
+
+char *format_Z1[4] = {	"",
+			"r%1$i++",
+			"r%1$i--",
+			"r%1$i++j"};
+
+char *format_Z2[4] = {	"r%1$i++",
+			"",
+			"r%1$i++2",
+			"r%1$i++k"};
+
+unsigned field_Z1(char *buf, unsigned bufsize, unsigned reg, unsigned op) {
+	snprintf(buf, bufsize, format_Z1[op & 0x3], reg);
+	return strlen(buf);
+}
+
+unsigned field_Z2(char *buf, unsigned bufsize, unsigned reg, unsigned op) {
+	snprintf(buf, bufsize, format_Z2[op & 0x3], reg);
+	return strlen(buf);
+}
+
