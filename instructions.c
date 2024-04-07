@@ -42,11 +42,11 @@ void instr_b00101(uint16_t word) {
 	field_F1(buf_F1, sizeof(buf_F1), instr.f1, instr.d, instr.s);
 	oprintbuf(buf_F1);
 
-	oprintf("tmp = a%i%s\n", '1' - instr.d, instr.x ? "l" : "");
-	oprintf("a%i%s = *r%i\n", '1' - instr.d, instr.x ? "l" : "", instr.yzReg);
+	oprintf("tmp = a%c%s\n", '1' - instr.d, instr.x ? "l" : "");
+	oprintf("a%c%s = *r%i\n", '1' - instr.d, instr.x ? "l" : "", instr.yzReg);
 	field_Z1(buf_Z, sizeof(buf_Z), instr.yzReg, instr.yzOp);
 	oprintbuf(buf_Z);
-	oprintf("*r%i = temp", instr.yzReg);
+	oprintf("*r%i = tmp\n", instr.yzReg);
 	field_Z2(buf_Z, sizeof(buf_Z), instr.yzReg, instr.yzOp);
 	oprintbuf(buf_Z);
 }
@@ -129,7 +129,7 @@ void instr_b01101(uint16_t word) {
 	oprintf("%s = *r%i\n", field_R(instr.r), instr.yzReg);
 	field_Z1(buf_Z, sizeof(buf_Z), instr.yzReg, instr.yzOp);
 	oprintbuf(buf_Z);
-	oprintf("*r%i = temp", instr.yzReg);
+	oprintf("*r%i = tmp\n", instr.yzReg);
 	field_Z2(buf_Z, sizeof(buf_Z), instr.yzReg, instr.yzOp);
 	oprintbuf(buf_Z);
 }
@@ -224,6 +224,25 @@ void instr_b10100(uint16_t word) {
 	oprintbuf(buf_F1);
 	oprintf("*r%i = y%s\n", instr.yzReg, instr.x ? "l" : "");
 	oprintbuf(buf_Y);
+}
+
+void instr_b10101(uint16_t word) {
+	union INSTR_F1 instr;
+	char buf_F1[64];
+	char buf_Z[16];
+
+	instr.i = word;
+
+	field_F1(buf_F1, sizeof(buf_F1), instr.f1, instr.d, instr.s);
+	oprintbuf(buf_F1);
+
+	oprintf("tmp = y%s\n", instr.x ? "l" : "");
+	oprintf("y%s = *r%i\n", instr.x ? "l" : "", instr.yzReg);
+	field_Z1(buf_Z, sizeof(buf_Z), instr.yzReg, instr.yzOp);
+	oprintbuf(buf_Z);
+	oprintf("*r%i = tmp\n", instr.yzReg);
+	field_Z2(buf_Z, sizeof(buf_Z), instr.yzReg, instr.yzOp);
+	oprintbuf(buf_Z);
 }
 
 void instr_b10110(uint16_t word) {
@@ -360,11 +379,11 @@ void instr_b11101(uint16_t word) {
 	oprintf("y = *r%i\n", instr.yzReg);
 	field_Z1(buf_Z, sizeof(buf_Z), instr.yzReg, instr.yzOp);
 	oprintbuf(buf_Z);
-	oprintf("*r%i = temp", instr.yzReg);
+	oprintf("*r%i = tmp\n", instr.yzReg);
 	field_Z2(buf_Z, sizeof(buf_Z), instr.yzReg, instr.yzOp);
 	oprintbuf(buf_Z);
 	oprintf("x = *pt\n");
-	oprintf("pt++%s", instr.x ? "i" : "");
+	oprintf("pt++%s\n", instr.x ? "i" : "");
 }
 
 void instr_b11111(uint16_t word) {
