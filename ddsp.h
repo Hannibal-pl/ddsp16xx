@@ -182,6 +182,7 @@ extern unsigned field_Z2(char *buf, unsigned bufsize, unsigned reg, unsigned op)
 extern void instr_b00000(uint16_t word);
 extern void instr_b00010(uint16_t word);
 extern void instr_b00100(uint16_t word);
+extern void instr_b00101(uint16_t word);
 extern void instr_b00110(uint16_t word);
 extern void instr_b00111(uint16_t word);
 extern void instr_b01000(uint16_t word);
