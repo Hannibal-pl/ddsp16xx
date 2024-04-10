@@ -75,6 +75,30 @@ char * field_CON(unsigned con) {
 
 
 
+char *string_DR[16] = {		"r0",
+				"r1",
+				"r2",
+				"r3",
+				"a0",
+				"a0l",
+				"a1",
+				"a1l",
+				"y",
+				"yl",
+				"p",
+				"pl",
+				"x",
+				"pt",
+				"pr",
+				"psw"};
+
+char * field_DR(unsigned dr) {
+	return string_DR[dr & 0xF];
+}
+
+
+
+
 char *format_F1 [16] = {	"p = x * y#a%1$i = p",
 				"p = x * y#a%1$i = a%2$i + p",
 				"p = x * y",

@@ -432,6 +432,56 @@ void instr_b11101(uint16_t word) {
 	oprintf("pt++%s\n", instr.x ? "i" : "");
 }
 
+void instr_b11110(uint16_t word) {
+	union INSTR_F9a instr9;
+	union INSTR_F3b instr3;
+
+	instr9.i = word;
+	instr3.i = word;
+
+	if (instr9.bit5) {
+		if (instr9.rw) {
+			oprintf("%s = *(ybase + %0x02X)\n", field_DR(instr9.dr), instr9.offset);
+		} else {
+			oprintf("*(ybase + 0x%02X) = %s\n", instr9.offset, field_DR(instr9.dr));
+		}
+	} else {
+		switch(instr3.bmu) {
+			case 0b0000000:
+				oprintf("a%1$c = a%2$c >> ar3$%i\n", '0' + instr3.d, '0' + instr3.s, instr3.m);
+				break;
+			case 0b0000100:
+				oprintf("a%1$c = a%2$c << ar3$%i\n", '0' + instr3.d, '0' + instr3.s, instr3.m);
+				break;
+			case 0b0000010:
+				oprintf("a%1$c = a%2$c >>> ar3$%i\n", '0' + instr3.d, '0' + instr3.s, instr3.m);
+				break;
+			case 0b0000110:
+				oprintf("a%1$c = a%2$c <<< ar3$%i\n", '0' + instr3.d, '0' + instr3.s, instr3.m);
+				break;
+			case 0b1000000:
+				oprintf("a%1$c = a%2$c >> a%3$c\n", '0' + instr3.d, '1' - instr3.s, '0' + instr3.s);
+				break;
+			case 0b1000100:
+				oprintf("a%1$c = a%2$c << a%3$c\n", '0' + instr3.d, '1' - instr3.s, '0' + instr3.s);
+				break;
+			case 0b1000010:
+				oprintf("a%1$c = a%2$c >>> a%3$c\n", '0' + instr3.d, '1' - instr3.s, '0' + instr3.s);
+				break;
+			case 0b1000110:
+				oprintf("a%1$c = a%2$c <<< a%3$c\n", '0' + instr3.d, '1' - instr3.s, '0' + instr3.s);
+				break;
+			default:
+				oprintf("Unknown BMU operation 0b%07b\n", instr3.bmu);
+				// It seems that 5th bit mark IM16 parameter. In case if it's set in unknown
+				// operation it maybe desirable to fetch it. For now it's missing because
+				// this situation in real case is higly unlikely. And in case of dissassemby
+				// data this may break following code.
+				break;
+		}
+	}
+}
+
 void instr_b11111(uint16_t word) {
 	union INSTR_F1 instr;
 	char buf_F1[64];

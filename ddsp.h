@@ -83,6 +83,17 @@ union INSTR_F3a {
 	};
 };
 
+union INSTR_F3b {
+	uint16_t i;
+	struct {
+		unsigned m:2;
+		unsigned bmu:7;
+		unsigned s:1;
+		unsigned d:1;
+		unsigned t:5;
+	};
+};
+
 union INSTR_F4 {
 	uint16_t i;
 	struct {
@@ -163,6 +174,17 @@ union INSTR_F9 {
 	};
 };
 
+union INSTR_F9a {
+	uint16_t i;
+	struct {
+		unsigned offset:5;
+		unsigned bit5:1;
+		unsigned dr:4;
+		unsigned rw:1;
+		unsigned t:5;
+	};
+};
+
 union INSTR_F10 {
 	uint16_t i;
 	struct {
@@ -186,6 +208,7 @@ extern void check_crc(void);
 //fields:
 extern unsigned field_B(char *buf, unsigned bufsize, unsigned B);
 extern char * field_CON(unsigned con);
+extern char * field_DR(unsigned dr);
 extern unsigned field_F1(char *buf, unsigned bufsize, unsigned F1, unsigned D, unsigned S);
 extern unsigned field_F2(char *buf, unsigned bufsize, unsigned F2, unsigned D, unsigned S);
 extern unsigned field_F3(char *buf, unsigned bufsize, unsigned F3, unsigned D, unsigned S, char *hl);
@@ -221,6 +244,7 @@ extern void instr_b11010(uint16_t word);
 extern void instr_b11011(uint16_t word);
 extern void instr_b11100(uint16_t word);
 extern void instr_b11101(uint16_t word);
+extern void instr_b11110(uint16_t word);
 extern void instr_b11111(uint16_t word);
 //cmdline:
 extern void parseparams(int argc, char *argv[]);
