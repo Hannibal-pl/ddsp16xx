@@ -180,7 +180,7 @@ void instr_b10010(uint16_t word) {
 
 	instr.i = word;
 	oprintf("test()\n");
-	oprintf("c1++");
+	oprintf("c1++\n");
 	oprintf("if %s {\n", field_CON(instr.con));
 	context.indent++;
 
@@ -313,6 +313,21 @@ void instr_b11000(uint16_t word) {
 	}
 }
 
+void instr_b11001(uint16_t word) {
+	union INSTR_F1 instr;
+	char buf_F1[64];
+
+	instr.i = word;
+
+	field_F1(buf_F1, sizeof(buf_F1), instr.f1, instr.d, instr.s);
+	oprintbuf(buf_F1);
+
+	oprintf("tmp = y\n");
+	oprintf("y = a0\n");
+	oprintf("x = *pt\n");
+	oprintf("pt++%s\n", instr.x ? "i" : "");
+}
+
 void instr_b11010(uint16_t word) {
 	union INSTR_F6 instr;
 	union INSTR control_instr;
@@ -347,6 +362,21 @@ void instr_b11010(uint16_t word) {
 
 	context.indent--;
 	oprintf("}\n");
+}
+
+void instr_b11011(uint16_t word) {
+	union INSTR_F1 instr;
+	char buf_F1[64];
+
+	instr.i = word;
+
+	field_F1(buf_F1, sizeof(buf_F1), instr.f1, instr.d, instr.s);
+	oprintbuf(buf_F1);
+
+	oprintf("tmp = y\n");
+	oprintf("y = a1\n");
+	oprintf("x = *pt\n");
+	oprintf("pt++%s\n", instr.x ? "i" : "");
 }
 
 void instr_b11100(uint16_t word) {
