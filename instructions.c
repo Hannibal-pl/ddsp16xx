@@ -372,7 +372,7 @@ void instr_b11010(uint16_t word) {
 			instr_b11000(control_instr.i);
 			break;
 		default:
-			printf("UNKNOWN CONTROL 0b%05b\n", control_instr.t);
+			printf("Unknown CONTROL operation 0b%05b\n", control_instr.t);
 			break;
 	}
 
@@ -448,16 +448,16 @@ void instr_b11110(uint16_t word) {
 	} else {
 		switch(instr3.bmu) {
 			case 0b0000000:
-				oprintf("a%1$c = a%2$c >> ar3$%i\n", '0' + instr3.d, '0' + instr3.s, instr3.m);
+				oprintf("a%1$c = a%2$c >> ar%3$i\n", '0' + instr3.d, '0' + instr3.s, instr3.m);
 				break;
 			case 0b0000100:
-				oprintf("a%1$c = a%2$c << ar3$%i\n", '0' + instr3.d, '0' + instr3.s, instr3.m);
+				oprintf("a%1$c = a%2$c << ar%3$i\n", '0' + instr3.d, '0' + instr3.s, instr3.m);
 				break;
 			case 0b0000010:
-				oprintf("a%1$c = a%2$c >>> ar3$%i\n", '0' + instr3.d, '0' + instr3.s, instr3.m);
+				oprintf("a%1$c = a%2$c >>> ar%3$i\n", '0' + instr3.d, '0' + instr3.s, instr3.m);
 				break;
 			case 0b0000110:
-				oprintf("a%1$c = a%2$c <<< ar3$%i\n", '0' + instr3.d, '0' + instr3.s, instr3.m);
+				oprintf("a%1$c = a%2$c <<< ar%3$i\n", '0' + instr3.d, '0' + instr3.s, instr3.m);
 				break;
 			case 0b1000000:
 				oprintf("a%1$c = a%2$c >> a%3$c\n", '0' + instr3.d, '1' - instr3.s, '0' + instr3.s);
@@ -483,6 +483,36 @@ void instr_b11110(uint16_t word) {
 			case 0b1101010:
 				oprintf("a%1$c = a%2$c << 0x%3$04X\n", '0' + instr3.d, '0' + instr3.s, next_word());
 				break;
+			case 0b0000011:
+				oprintf("a%1$c = exp(a%2$c)\n", '0' + instr3.d, '0' + instr3.s);
+				break;
+			case 0b0000111:
+				oprintf("a%1$c = norm(a%2$c, ar%3$i)\n", '0' + instr3.d, '0' + instr3.s, instr3.m);
+				break;
+			case 0b1110000:
+				oprintf("a%1$c = extracts(a%2$c, 0x%3$04X)\n", '0' + instr3.d, '0' + instr3.s, next_word());
+				break;
+			case 0b1110001:
+				oprintf("a%1$c = extractz(a%2$c, 0x%3$04X)\n", '0' + instr3.d, '0' + instr3.s, next_word());
+				break;
+			case 0b1110010:
+				oprintf("a%1$c = insert(a%2$c, 0x%3$04X)\n", '0' + instr3.d, '0' + instr3.s, next_word());
+				break;
+			case 0b0010000:
+				oprintf("a%1$c = extracts(a%2$c, ar%3$i)\n", '0' + instr3.d, '0' + instr3.s, instr3.m);
+				break;
+			case 0b0010001:
+				oprintf("a%1$c = extractz(a%2$c, ar%3$i)\n", '0' + instr3.d, '0' + instr3.s, instr3.m);
+				break;
+			case 0b0010010:
+				oprintf("a%1$c = insert(a%2$c, ar%3$i)\n", '0' + instr3.d, '0' + instr3.s, instr3.m);
+				break;
+			case 0b0110100:
+				if ((instr3.m & 0x2) == 0) {
+					oprintf("a%1$c = a%2$c:aa%3$i\n", '0' + instr3.d, '0' + instr3.s, instr3.m & 0x1);
+					break;
+				}
+				//faltrough
 			default:
 				oprintf("Unknown BMU operation 0b%07b\n", instr3.bmu);
 				// It seems that 5th bit mark IM16 parameter. In case if it's set in unknown

@@ -22,10 +22,10 @@ char *format_B[8] = {	"return",
 			"ireturn",
 			"goto pt",
 			"call pt",
-			"UNKNOWN gotoB 0b1$%03b",
-			"UNKNOWN gotoB 0b1$%03b",
-			"UNKNOWN gotoB 0b1$%03b",
-			"UNKNOWN gotoB 0b1$%03b"};
+			"unknown gotoB operation 0b1$%03b",
+			"unknown gotoB operation 0b1$%03b",
+			"unknown gotoB operation 0b1$%03b",
+			"unknown gotoB operation 0b1$%03b"};
 
 unsigned field_B(char *buf, unsigned bufsize, unsigned B) {
 	snprintf(buf, bufsize, format_B[B & 0x7], B);
