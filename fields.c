@@ -72,6 +72,14 @@ char * field_CON(unsigned con) {
 	return string_CON[con & 0x1F];
 }
 
+bool is_CON_true(unsigned con) {
+	return (con == 0b01110);
+}
+
+bool is_CON_false(unsigned con) {
+	return (con == 0b01111);
+}
+
 
 
 

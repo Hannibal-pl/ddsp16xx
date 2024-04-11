@@ -208,6 +208,8 @@ extern void check_crc(void);
 //fields:
 extern unsigned field_B(char *buf, unsigned bufsize, unsigned B);
 extern char * field_CON(unsigned con);
+extern bool is_CON_true(unsigned con);
+extern bool is_CON_false(unsigned con);
 extern char * field_DR(unsigned dr);
 extern unsigned field_F1(char *buf, unsigned bufsize, unsigned F1, unsigned D, unsigned S);
 extern unsigned field_F2(char *buf, unsigned bufsize, unsigned F2, unsigned D, unsigned S);

@@ -195,18 +195,25 @@ void instr_b10010(uint16_t word) {
 	char buf_F2[64];
 
 	instr.i = word;
+
 	oprintf("test()\n");
 	oprintf("c1++\n");
-	oprintf("if %s {\n", field_CON(instr.con));
-	context.indent++;
 
-	field_F2(buf_F2, sizeof(buf_F2), instr.f2, instr.d, instr.s);
-	oprintf("%s\n", buf_F2);
-	oprintf("c2 = c1");
+	if (is_CON_true(instr.con)) {
+		field_F2(buf_F2, sizeof(buf_F2), instr.f2, instr.d, instr.s);
+		oprintf("%s\n", buf_F2);
+		oprintf("c2 = c1");
+	} else if (!is_CON_false(instr.con)) {
+		oprintf("if %s {\n", field_CON(instr.con));
+		context.indent++;
 
-	context.indent--;
-	oprintf("}\n");
+		field_F2(buf_F2, sizeof(buf_F2), instr.f2, instr.d, instr.s);
+		oprintf("%s\n", buf_F2);
+		oprintf("c2 = c1");
 
+		context.indent--;
+		oprintf("}\n");
+	}
 }
 
 void instr_b10011(uint16_t word) {
@@ -214,16 +221,20 @@ void instr_b10011(uint16_t word) {
 	char buf_F2[64];
 
 	instr.i = word;
+
 	oprintf("test()\n");
-	oprintf("if %s {\n", field_CON(instr.con));
-	context.indent++;
 
-	field_F2(buf_F2, sizeof(buf_F2), instr.f2, instr.d, instr.s);
-	oprintf("%s\n", buf_F2);
+	if (is_CON_true(instr.con)) {
+		field_F2(buf_F2, sizeof(buf_F2), instr.f2, instr.d, instr.s);
+	} else if (!is_CON_false(instr.con)) {
+		oprintf("if %s {\n", field_CON(instr.con));
+		context.indent++;
+		field_F2(buf_F2, sizeof(buf_F2), instr.f2, instr.d, instr.s);
+		oprintf("%s\n", buf_F2);
 
-	context.indent--;
-	oprintf("}\n");
-
+		context.indent--;
+		oprintf("}\n");
+	}
 }
 
 void instr_b10100(uint16_t word) {
@@ -355,8 +366,16 @@ void instr_b11010(uint16_t word) {
 	}
 
 	oprintf("test()\n");
-	oprintf("if %s {\n", field_CON(instr.con));
-	context.indent++;
+
+	if (is_CON_false(instr.con)) {
+		next_word(); //fetch control instruction
+		return;
+	}
+
+	if (!is_CON_true(instr.con)) {
+		oprintf("if %s {\n", field_CON(instr.con));
+		context.indent++;
+	}
 
 	control_instr.i = next_word();
 	switch (control_instr.t) {
@@ -376,8 +395,10 @@ void instr_b11010(uint16_t word) {
 			break;
 	}
 
-	context.indent--;
-	oprintf("}\n");
+	if (!is_CON_true(instr.con)) {
+		context.indent--;
+		oprintf("}\n");
+	}
 }
 
 void instr_b11011(uint16_t word) {
