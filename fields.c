@@ -16,7 +16,7 @@ PERFORMANCE OF THIS SOFTWARE.
 
 #include <string.h>
 
-#include "ddsp.h"
+#include "ddsp16xx.h"
 
 char *format_B[8] = {	"return",
 			"ireturn",

@@ -18,7 +18,7 @@ PERFORMANCE OF THIS SOFTWARE.
 #include <string.h>
 #include <getopt.h>
 
-#include "ddsp.h"
+#include "ddsp16xx.h"
 
 const struct option longopt[] = {
 	{"bin", 0, NULL, 'b'},

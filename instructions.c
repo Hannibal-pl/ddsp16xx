@@ -16,7 +16,7 @@ PERFORMANCE OF THIS SOFTWARE.
 
 #include <string.h>
 
-#include "ddsp.h"
+#include "ddsp16xx.h"
 
 void instr_b00000(uint16_t word) {
 	union INSTR_F4 instr;
@@ -470,6 +470,18 @@ void instr_b11110(uint16_t word) {
 				break;
 			case 0b1000110:
 				oprintf("a%1$c = a%2$c <<< a%3$c\n", '0' + instr3.d, '1' - instr3.s, '0' + instr3.s);
+				break;
+			case 0b1100000:
+				oprintf("a%1$c = a%2$c >> 0x%3$04X\n", '0' + instr3.d, '0' + instr3.s, next_word());
+				break;
+			case 0b1101000:
+				oprintf("a%1$c = a%2$c << 0x%3$04X\n", '0' + instr3.d, '0' + instr3.s, next_word());
+				break;
+			case 0b1100010:
+				oprintf("a%1$c = a%2$c >> 0x%3$04X\n", '0' + instr3.d, '0' + instr3.s, next_word());
+				break;
+			case 0b1101010:
+				oprintf("a%1$c = a%2$c << 0x%3$04X\n", '0' + instr3.d, '0' + instr3.s, next_word());
 				break;
 			default:
 				oprintf("Unknown BMU operation 0b%07b\n", instr3.bmu);

@@ -2,15 +2,15 @@ CC=gcc
 CFLAGS=-Wall -g -std=gnu99 -flto
 INCLUDES=-I/usr/include
 LIBS=-lm
-MOD=cmdline.o ddsp.o fields.o instructions.o tools.o
+MOD=cmdline.o ddsp16xx.o fields.o instructions.o tools.o
 
-all: ddsp
+all: ddsp16xx
 
-$(MOD): %.o: %.c ddsp.h
+$(MOD): %.o: %.c ddsp16xx.h
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
-ddsp: $(MOD)
-	$(CC) $(CFLAGS) $(LIBS) -o ddsp $(MOD)
+ddsp16xx: $(MOD)
+	$(CC) $(CFLAGS) $(LIBS) -o ddsp16xx $(MOD)
 
 clean:
 	rm -f *o ddsp

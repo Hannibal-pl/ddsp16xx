@@ -17,7 +17,7 @@ PERFORMANCE OF THIS SOFTWARE.
 #include <string.h>
 #include <libgen.h>
 
-#include "ddsp.h"
+#include "ddsp16xx.h"
 
 struct CONTEXT context = {
 	.file = NULL,

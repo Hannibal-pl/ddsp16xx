@@ -17,7 +17,7 @@ PERFORMANCE OF THIS SOFTWARE.
 #include <stdarg.h>
 #include <string.h>
 
-#include "ddsp.h"
+#include "ddsp16xx.h"
 
 uint16_t next_word(void) {
 	uint16_t word;
