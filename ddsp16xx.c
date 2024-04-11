@@ -36,10 +36,6 @@ struct CONTEXT context = {
 	.is_hidden = true
 };
 
-void usage(char *binary) {
-	printf("Usage: %s [bin|raw] filename\n", basename(binary));
-}
-
 void disassemble(void) {
 	union INSTR word;
 
@@ -188,7 +184,6 @@ int main(int argc, char *argv[]) {
 	printf("Program size:   %u words\n", context.size);
 	printf("Orgin adress:   0x%04X%s\n", context.org_start, context.is_org_cmdline ? " (manual)" : "");
 	printf("Code adress:    0x%04X%s\n\n", context.start, context.is_start_cmdline ? " (manual)" : "");
-//	printf("Program size is %u words long orgin is 0x%04X%s\n\n", context.size, context.org_start, context.is_org_cmdline ? " (manual)" : "");
 	disassemble();
 
 	fclose(context.file);

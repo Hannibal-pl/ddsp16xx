@@ -23,6 +23,20 @@ PERFORMANCE OF THIS SOFTWARE.
 
 #define VERSION			"0.1.0"
 
+#define CPU_NAME_LENGTH		16
+#define CPU_DESC_LENGTH		96
+
+#define CPU_DSP_GENERIC		0
+#define CPU_DSP_1611		1
+#define CPU_DSP_1617		2
+#define CPU_DSP_1618		3
+#define CPU_DSP_1627		4
+#define CPU_DSP_1628		5
+#define CPU_DSP_1629		6
+#define CPU_DSP_MAX		6
+#define CPU_DSP_COUNT		(CPU_DSP_MAX + 1)
+
+
 struct CONTEXT {
 	FILE *file;
 	unsigned size;
@@ -38,6 +52,12 @@ struct CONTEXT {
 	bool check_crc;
 	unsigned loop_n;
 	bool is_hidden;
+};
+
+struct CPU {
+	unsigned id;
+	char name[CPU_NAME_LENGTH];
+	char description[CPU_DESC_LENGTH];
 };
 
 union INSTR {
