@@ -23,8 +23,10 @@ PERFORMANCE OF THIS SOFTWARE.
 const struct option longopt[] = {
 	{"bin", 0, NULL, 'b'},
 	{"crc", 0, NULL, 'c'},
+	{"dsp", 1, NULL, 'd'},
 	{"help", 0, NULL, 'h'},
 	{"hidden", 0, NULL, 'H'},
+	{"list-dsp", 0, NULL, 'l'},
 	{"orgin", 1, NULL, 'o'},
 	{"raw", 0, NULL, 'r'},
 	{"start", 1, NULL, 's'},
@@ -35,7 +37,7 @@ void parseparams(int argc, char *argv[]) {
 	int opt;
 
 	while (true) {
-		opt = getopt_long(argc, argv, "bchHo:rs:v?", longopt, NULL);
+		opt = getopt_long(argc, argv, "bcd:hHlo:rs:v?", longopt, NULL);
 		if (opt == -1) {
 			break;
 		}
@@ -47,13 +49,25 @@ void parseparams(int argc, char *argv[]) {
 			case 'c':
 				context.check_crc = true;
 				break;
+			case 'd':
+				if (optarg == NULL) {
+					printf("You must provide DSP name.\n");
+					exit(-1);
+				}
+				if (!select_cpu(optarg)) {
+					printf("Invalid DSP name '%s'. use option `-l` for list.\n", optarg);
+					exit(-1);
+				}
+				break;
 			case '?':
 			case 'h':
 				printf("Usage: %s [OPTIONS] filename\n", argv[0]);
 				printf("  -b, --bin\t\tSet input file format to BIN, default.\n");
 				printf("  -c, --crc\t\tCheck input file control sum. BIN format only.\n");
+				printf("  -d, --dsp\t\tSelect DSP version. See oprion `-l` for list.\n");
 				printf("  -h, --help\t\tPrint this help and exit.\n");
 				printf("  -H, --hidden\t\tShow hidden 'always true/false' conitional code.\n");
+				printf("  -l  --list-dsp\tList all supported DSPs and exit.\n");
 				printf("  -o, --orgin=ADDRESS\tOverwrite default file orgin.\n");
 				printf("  -r, --raw\t\tSet input file format to RAW.\n");
 				printf("  -s, --start=ADDRESS\tCode start addres. Data before it won't be dissassebled.\n");
@@ -62,6 +76,10 @@ void parseparams(int argc, char *argv[]) {
 				break;
 			case 'H':
 				context.is_hidden = false;
+				break;
+			case 'l':
+				list_cpu();
+				exit(0);
 				break;
 			case 'o':
 				uint32_t org;

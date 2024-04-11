@@ -80,6 +80,23 @@ bool is_CON_false(unsigned con) {
 	return (context.is_hidden && (con == 0b01111));
 }
 
+void fix_CON(unsigned cpu) {
+	switch (cpu) {
+		case CPU_DSP_1611:
+		case CPU_DSP_1617:
+			string_CON[0b11100] = "unk28";
+			string_CON[0x11101] = "unk29";
+			break;
+		case CPU_DSP_1618:
+			string_CON[0b11100] = "ebusy";
+			string_CON[0x11101] = "unk29";
+		case CPU_DSP_1627:
+		case CPU_DSP_1629:
+			string_CON[0x11101] = "unk29";
+			break;
+	}
+}
+
 
 
 
@@ -247,6 +264,36 @@ char *string_R [64] = {		"r0",
 
 char * field_R(unsigned r) {
 	return string_R[r & 0x1E];
+}
+
+void fix_R(unsigned cpu) {
+	switch (cpu) {
+		case CPU_DSP_1611:
+			string_R[0b001110] = "unk14";
+			string_R[0b101111] = "unk47";
+			break;
+		case CPU_DSP_1617:
+			string_R[0b001110] = "pdx2";
+			string_R[0b001111] = "pdx3";
+			string_R[0b011100] = "pioc";
+			string_R[0b011110] = "pdx1";
+			string_R[0b101100] = "pdx4";
+			string_R[0b101101] = "pdx5";
+			string_R[0b101110] = "pdx6";
+			string_R[0b101111] = "pdx7";
+			string_R[0b111001] = "unk57";
+			string_R[0b111110] = "unk62";
+			break;
+		case CPU_DSP_1618:
+			string_R[0b001110] = "unk14";
+			break;
+		case CPU_DSP_1627:
+		case CPU_DSP_1629:
+			string_R[0b101111] = "unk47";
+			string_R[0b111001] = "unk57";
+			string_R[0b111110] = "unk62";
+			break;
+	}
 }
 
 

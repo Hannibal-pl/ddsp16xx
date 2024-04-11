@@ -33,7 +33,8 @@ struct CONTEXT context = {
 	.is_start_cmdline = false,
 	.check_crc = false,
 	.loop_n = 0,
-	.is_hidden = true
+	.is_hidden = true,
+	.cpu = CPU_DSP_GENERIC
 };
 
 void disassemble(void) {
@@ -183,7 +184,8 @@ int main(int argc, char *argv[]) {
 	}
 	printf("Program size:   %u words\n", context.size);
 	printf("Orgin adress:   0x%04X%s\n", context.org_start, context.is_org_cmdline ? " (manual)" : "");
-	printf("Code adress:    0x%04X%s\n\n", context.start, context.is_start_cmdline ? " (manual)" : "");
+	printf("Code adress:    0x%04X%s\n", context.start, context.is_start_cmdline ? " (manual)" : "");
+	printf("CPU type:       %s (%s)\n\n", get_cpu(context.cpu)->name, get_cpu(context.cpu)->description);
 	disassemble();
 
 	fclose(context.file);

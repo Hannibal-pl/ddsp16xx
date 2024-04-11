@@ -21,7 +21,7 @@ PERFORMANCE OF THIS SOFTWARE.
 #include <stdbool.h>
 #include <stdio.h>
 
-#define VERSION			"0.1.0"
+#define VERSION			"0.9.0"
 
 #define CPU_NAME_LENGTH		16
 #define CPU_DESC_LENGTH		96
@@ -52,6 +52,7 @@ struct CONTEXT {
 	bool check_crc;
 	unsigned loop_n;
 	bool is_hidden;
+	unsigned cpu;
 };
 
 struct CPU {
@@ -233,11 +234,13 @@ extern unsigned field_B(char *buf, unsigned bufsize, unsigned B);
 extern char * field_CON(unsigned con);
 extern bool is_CON_true(unsigned con);
 extern bool is_CON_false(unsigned con);
+extern void fix_CON(unsigned cpu);
 extern char * field_DR(unsigned dr);
 extern unsigned field_F1(char *buf, unsigned bufsize, unsigned F1, unsigned D, unsigned S);
 extern unsigned field_F2(char *buf, unsigned bufsize, unsigned F2, unsigned D, unsigned S);
 extern unsigned field_F3(char *buf, unsigned bufsize, unsigned F3, unsigned D, unsigned S, char *hl);
 extern char * field_R(unsigned r);
+extern void fix_R(unsigned cpu);
 extern char * field_SR(unsigned sr);
 extern unsigned field_Y(char *buf, unsigned bufsize, unsigned reg, unsigned op);
 extern unsigned field_Z1(char *buf, unsigned bufsize, unsigned reg, unsigned op);
@@ -274,5 +277,10 @@ extern void instr_b11110(uint16_t word);
 extern void instr_b11111(uint16_t word);
 //cmdline:
 extern void parseparams(int argc, char *argv[]);
+//cpu
+extern void list_cpu(void);
+extern void fix_cpu(unsigned cpu);
+extern struct CPU * get_cpu(unsigned cpu);
+extern bool select_cpu(char *name);
 
 #endif
