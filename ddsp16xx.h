@@ -28,13 +28,16 @@ struct CONTEXT {
 	unsigned size;
 	uint16_t org_start;
 	uint16_t org_cur;
+	uint16_t start;
 	bool is_bin;
 	bool is_crc;
 	unsigned indent;
 	bool is_org;
 	bool is_org_cmdline;
+	bool is_start_cmdline;
 	bool check_crc;
 	unsigned loop_n;
+	bool is_hidden;
 };
 
 union INSTR {
@@ -220,6 +223,7 @@ extern unsigned field_Y(char *buf, unsigned bufsize, unsigned reg, unsigned op);
 extern unsigned field_Z1(char *buf, unsigned bufsize, unsigned reg, unsigned op);
 extern unsigned field_Z2(char *buf, unsigned bufsize, unsigned reg, unsigned op);
 //instructions:
+extern void instr_data(uint16_t word);
 extern void instr_b00000(uint16_t word);
 extern void instr_b00010(uint16_t word);
 extern void instr_b00100(uint16_t word);

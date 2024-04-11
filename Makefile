@@ -13,7 +13,7 @@ ddsp16xx: $(MOD)
 	$(CC) $(CFLAGS) $(LIBS) -o ddsp16xx $(MOD)
 
 clean:
-	rm -f *o ddsp
+	rm -f *o ddsp16xx
 
 rebuild: clean all
 

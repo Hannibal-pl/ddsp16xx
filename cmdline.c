@@ -24,8 +24,10 @@ const struct option longopt[] = {
 	{"bin", 0, NULL, 'b'},
 	{"crc", 0, NULL, 'c'},
 	{"help", 0, NULL, 'h'},
+	{"hidden", 0, NULL, 'H'},
 	{"orgin", 1, NULL, 'o'},
 	{"raw", 0, NULL, 'r'},
+	{"start", 1, NULL, 's'},
 	{"version", 0, NULL, 'v'},
 	{NULL, 0, NULL, 0}};
 
@@ -33,7 +35,7 @@ void parseparams(int argc, char *argv[]) {
 	int opt;
 
 	while (true) {
-		opt = getopt_long(argc, argv, "bcho:rv?", longopt, NULL);
+		opt = getopt_long(argc, argv, "bchHo:rs:v?", longopt, NULL);
 		if (opt == -1) {
 			break;
 		}
@@ -48,23 +50,28 @@ void parseparams(int argc, char *argv[]) {
 			case '?':
 			case 'h':
 				printf("Usage: %s [OPTIONS] filename\n", argv[0]);
-				printf("  -b, --bin\t\t\tSet input file format to BIN, default.\n");
-				printf("  -c, --crc\t\t\tCheck input file control sum. BIN format only.\n");
-				printf("  -h, --help\t\t\tPrint this help and exit.\n");
-				printf("  -o, --orgin=ADDRESS\tOverwrite default code orgin.\n");
-				printf("  -r, --raw\t\t\tSet input file format to RAW.\n");
-				printf("  -v, --version\t\t\tPrint version number and exit.\n");
+				printf("  -b, --bin\t\tSet input file format to BIN, default.\n");
+				printf("  -c, --crc\t\tCheck input file control sum. BIN format only.\n");
+				printf("  -h, --help\t\tPrint this help and exit.\n");
+				printf("  -H, --hidden\t\tShow hidden 'always true/false' conitional code.\n");
+				printf("  -o, --orgin=ADDRESS\tOverwrite default file orgin.\n");
+				printf("  -r, --raw\t\tSet input file format to RAW.\n");
+				printf("  -s, --start=ADDRESS\tCode start addres. Data before it won't be dissassebled.\n");
+				printf("  -v, --version\t\tPrint version number and exit.\n");
 				exit(0);
+				break;
+			case 'H':
+				context.is_hidden = false;
 				break;
 			case 'o':
 				uint32_t org;
 				if (optarg == NULL) {
-					printf("You must specify code orgin addres.\n");
+					printf("You must specify file orgin addres.\n");
 					exit(-1);
 				}
 				org = strtoul(optarg, NULL, 0);
 				if (org > 0xFFFF) {
-					printf("Provided code orgin addres don't fit in 16bit addres space.\n");
+					printf("Provided file orgin addres don't fit in 16bit addres space.\n");
 					exit(-1);
 				}
 				context.org_start = org & 0xFFFF;
@@ -73,6 +80,20 @@ void parseparams(int argc, char *argv[]) {
 				break;
 			case 'r':
 				context.is_bin = false;
+				break;
+			case 's':
+				uint32_t start;
+				if (optarg == NULL) {
+					printf("You must specify code start addres.\n");
+					exit(-1);
+				}
+				start = strtoul(optarg, NULL, 0);
+				if (org > 0xFFFF) {
+					printf("Provided code start addres don't fit in 16bit addres space.\n");
+					exit(-1);
+				}
+				context.start = start & 0xFFFF;
+				context.is_start_cmdline = true;
 				break;
 			case 'v':
 				printf("%s: version: %s\n", argv[0], VERSION);

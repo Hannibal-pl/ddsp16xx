@@ -73,11 +73,11 @@ char * field_CON(unsigned con) {
 }
 
 bool is_CON_true(unsigned con) {
-	return (con == 0b01110);
+	return (context.is_hidden && (con == 0b01110));
 }
 
 bool is_CON_false(unsigned con) {
-	return (con == 0b01111);
+	return (context.is_hidden && (con == 0b01111));
 }
 
 

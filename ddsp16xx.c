@@ -24,13 +24,16 @@ struct CONTEXT context = {
 	.size = 0,
 	.org_start = 0,
 	.org_cur = 0,
+	.start = 0,
 	.is_bin = true,
 	.is_crc = false,
 	.indent = 0,
 	.is_org = true,
 	.is_org_cmdline = false,
+	.is_start_cmdline = false,
 	.check_crc = false,
 	.loop_n = 0,
+	.is_hidden = true
 };
 
 void usage(char *binary) {
@@ -45,6 +48,12 @@ void disassemble(void) {
 	word.i = next_word();
 	while(!feof(context.file)) {
 //		oprintf("INSTR 0b%05b\n", word.t);
+
+		if (context.is_start_cmdline && (context.start > context.org_cur)) {
+			instr_data(word.i);
+			goto next;
+		}
+
 		switch (word.t) {
 			case 0b00000:
 			case 0b00001:
@@ -148,7 +157,7 @@ void disassemble(void) {
 			}
 		}
 
-		word.i = next_word();
+		next: word.i = next_word();
 	}
 
 	printf("\nProgram end:\n");
@@ -167,12 +176,19 @@ int main(int argc, char *argv[]) {
 		context.org_cur = context.org_start - 1;
 	}
 
+	if (context.start < context.org_start) {
+		context.start = context.org_start;
+	}
+
 	fseek(context.file, context.is_bin ? 6 : 0, SEEK_SET);
 
 	if (context.check_crc) {
 		check_crc();
 	}
-	printf("Program size is %u words long orgin is 0x%04X%s\n\n", context.size, context.org_start, context.is_org_cmdline ? " (manual)" : "");
+	printf("Program size:   %u words\n", context.size);
+	printf("Orgin adress:   0x%04X%s\n", context.org_start, context.is_org_cmdline ? " (manual)" : "");
+	printf("Code adress:    0x%04X%s\n\n", context.start, context.is_start_cmdline ? " (manual)" : "");
+//	printf("Program size is %u words long orgin is 0x%04X%s\n\n", context.size, context.org_start, context.is_org_cmdline ? " (manual)" : "");
 	disassemble();
 
 	fclose(context.file);

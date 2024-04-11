@@ -18,6 +18,10 @@ PERFORMANCE OF THIS SOFTWARE.
 
 #include "ddsp16xx.h"
 
+void instr_data(uint16_t word) {
+	oprintf("WORD 0x%04X\n", word);
+}
+
 void instr_b00000(uint16_t word) {
 	union INSTR_F4 instr;
 
@@ -226,6 +230,7 @@ void instr_b10011(uint16_t word) {
 
 	if (is_CON_true(instr.con)) {
 		field_F2(buf_F2, sizeof(buf_F2), instr.f2, instr.d, instr.s);
+		oprintf("%s\n", buf_F2);
 	} else if (!is_CON_false(instr.con)) {
 		oprintf("if %s {\n", field_CON(instr.con));
 		context.indent++;
@@ -391,7 +396,7 @@ void instr_b11010(uint16_t word) {
 			instr_b11000(control_instr.i);
 			break;
 		default:
-			printf("Unknown CONTROL operation 0b%05b\n", control_instr.t);
+			oprintf("Unknown CONTROL operation 0b%05b\n", control_instr.t);
 			break;
 	}
 
@@ -462,7 +467,7 @@ void instr_b11110(uint16_t word) {
 
 	if (instr9.bit5) {
 		if (instr9.rw) {
-			oprintf("%s = *(ybase + %0x02X)\n", field_DR(instr9.dr), instr9.offset);
+			oprintf("%s = *(ybase + %002X)\n", field_DR(instr9.dr), instr9.offset);
 		} else {
 			oprintf("*(ybase + 0x%02X) = %s\n", instr9.offset, field_DR(instr9.dr));
 		}
