@@ -39,6 +39,7 @@ PERFORMANCE OF THIS SOFTWARE.
 
 struct CONTEXT {
 	FILE *file;
+	char *filename;
 	unsigned size;
 	uint16_t org_start;
 	uint16_t org_cur;

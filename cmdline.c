@@ -138,6 +138,7 @@ void parseparams(int argc, char *argv[]) {
 		exit(-1);
 	}
 
+	context.filename = argv[optind];
 	context.file = fopen(argv[optind], "r");
 	if (context.file == NULL) {
 		printf("Input file not found: '%s'.\n", argv[optind]);

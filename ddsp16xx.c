@@ -21,6 +21,7 @@ PERFORMANCE OF THIS SOFTWARE.
 
 struct CONTEXT context = {
 	.file = NULL,
+	.filename = NULL,
 	.size = 0,
 	.org_start = 0,
 	.org_cur = 0,
@@ -40,7 +41,7 @@ struct CONTEXT context = {
 void disassemble(void) {
 	union INSTR word;
 
-	printf("Program listing:\n\n");
+	printf(" --- PROGRAM START --- \n\n");
 
 	word.i = next_word();
 	while(!feof(context.file)) {
@@ -157,7 +158,7 @@ void disassemble(void) {
 		next: word.i = next_word();
 	}
 
-	printf("\nProgram end:\n");
+	printf("\n --- PROGRAM END ---\n");
 }
 
 int main(int argc, char *argv[]) {
@@ -182,6 +183,8 @@ int main(int argc, char *argv[]) {
 	if (context.check_crc) {
 		check_crc();
 	}
+	printf("Filename:       %s\n", context.filename);
+	printf("Format:         %s\n", context.is_bin ? "bin" : "raw");
 	printf("Program size:   %u words\n", context.size);
 	printf("Orgin adress:   0x%04X%s\n", context.org_start, context.is_org_cmdline ? " (manual)" : "");
 	printf("Code adress:    0x%04X%s\n", context.start, context.is_start_cmdline ? " (manual)" : "");
