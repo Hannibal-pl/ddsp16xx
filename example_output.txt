@@ -2,12 +2,12 @@ Filename:       dsp_RtDelay.bin
 Format:         bin
 Program size:   40 words
 Orgin adress:   0x1800
-Code adress:    0x1800
+Code adress:    0x1801 (manual)
 CPU type:       generic (Universal processor joining all features from rest of CPUs (default))
 
  --- PROGRAM START --- 
 
-0x1800:    goto 0x100C
+0x1800:    WORD 0x000C
 0x1801:    r0 = 0x0080
 0x1802:    a0l = *r0
 0x1802:    r0--
