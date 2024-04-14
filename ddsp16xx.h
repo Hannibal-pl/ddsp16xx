@@ -122,8 +122,8 @@ union INSTR_F3b {
 union INSTR_F4 {
 	uint16_t i;
 	struct {
-		unsigned ja:11;
-		unsigned t:5;
+		unsigned ja:12;
+		unsigned t4:4;
 	};
 };
 
