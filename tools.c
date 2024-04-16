@@ -21,6 +21,12 @@ PERFORMANCE OF THIS SOFTWARE.
 
 uint16_t next_word(void) {
 	uint16_t word;
+
+	if (context.is_single) {
+		//if in single instruction mode treat hi word as optional second instruction word
+		return (context.single >> 16);
+	}
+
 	fread(&word, sizeof(word), 1, context.file);
 	context.org_cur++;
 

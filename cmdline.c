@@ -31,6 +31,7 @@ const struct option longopt[] = {
 	{"no-lablel", 0, NULL, 'n'},
 	{"raw", 0, NULL, 'r'},
 	{"start", 1, NULL, 's'},
+	{"single", 1, NULL, 'S'},
 	{"version", 0, NULL, 'v'},
 	{NULL, 0, NULL, 0}};
 
@@ -46,6 +47,7 @@ void usage(char *appname) {
 				printf("  -o, --orgin=ADDRESS\tOverwrite default file orgin.\n");
 				printf("  -r, --raw\t\tSet input file format to RAW.\n");
 				printf("  -s, --start=ADDRESS\tCode start addres. Data before it won't be dissassebled.\n");
+				printf("  -S, --single=OPCODE\tDissassemble single opcode OPCODE.\n");
 				printf("  -v, --version\t\tPrint version number and exit.\n\n");
 }
 
@@ -53,7 +55,7 @@ void parseparams(int argc, char *argv[]) {
 	int opt;
 
 	while (true) {
-		opt = getopt_long(argc, argv, "bcd:hHlo:nrs:v?", longopt, NULL);
+		opt = getopt_long(argc, argv, "bcd:hHlo:nrs:S:v?", longopt, NULL);
 		if (opt == -1) {
 			break;
 		}
@@ -122,11 +124,24 @@ void parseparams(int argc, char *argv[]) {
 				context.start = start & 0xFFFF;
 				context.is_start_cmdline = true;
 				break;
+			case 'S':
+				if (optarg == NULL) {
+					printf("You must specify single instruction opcode.\n");
+					exit(-1);
+				}
+				context.single = strtoul(optarg, NULL, 0);
+				context.is_single = true;
+				break;
 			case 'v':
 				printf("%s: version: %s\n", argv[0], VERSION);
 				exit(0);
 				break;
 		}
+	}
+
+	if (context.is_single) {
+		//in single opcode mode we don't need input filename
+		return;
 	}
 
 	if (optind >= argc) {

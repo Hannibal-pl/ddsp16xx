@@ -54,6 +54,8 @@ struct CONTEXT {
 	unsigned loop_n;
 	bool is_hidden;
 	unsigned cpu;
+	bool is_single;
+	uint32_t single;
 };
 
 struct CPU {
