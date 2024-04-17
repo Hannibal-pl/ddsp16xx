@@ -82,6 +82,20 @@ bool is_CON_false(unsigned con) {
 
 void fix_CON(unsigned cpu) {
 	switch (cpu) {
+		case CPU_DSP_1604:
+		case CPU_DSP_1606:
+			string_CON[0b10010] = "unk18";
+			string_CON[0b10011] = "unk19";
+			string_CON[0b10100] = "unk20";
+			string_CON[0b10101] = "unk21";
+			string_CON[0b10110] = "unk22";
+			string_CON[0b10111] = "unk23";
+			string_CON[0b11000] = "unk24";
+			string_CON[0b11001] = "unk25";
+			string_CON[0b11100] = "unk28";
+			string_CON[0b11101] = "unk29";
+			break;
+		case CPU_DSP_1610:
 		case CPU_DSP_1611:
 		case CPU_DSP_1617:
 			string_CON[0b11100] = "unk28";
@@ -92,6 +106,18 @@ void fix_CON(unsigned cpu) {
 			string_CON[0b11101] = "unk29";
 		case CPU_DSP_1627:
 		case CPU_DSP_1629:
+			string_CON[0b11101] = "unk29";
+			break;
+		case CPU_DSP_1650:
+			string_CON[0b10010] = "pllon";
+			string_CON[0b10011] = "slowon";
+			string_CON[0b10100] = "plloff";
+			string_CON[0b10101] = "stopclk";
+			string_CON[0b10110] = "unk22";
+			string_CON[0b10111] = "unk23";
+			string_CON[0b11000] = "unk24";
+			string_CON[0b11001] = "unk25";
+			string_CON[0b11100] = "unk28";
 			string_CON[0b11101] = "unk29";
 			break;
 	}
@@ -268,6 +294,48 @@ char * field_R(unsigned r) {
 
 void fix_R(unsigned cpu) {
 	switch (cpu) {
+		case CPU_DSP_1604:
+		case CPU_DSP_1606:
+			string_R[0b001110] = "unk14";
+			string_R[0b011001] = "sioce";
+			string_R[0b011010] = "sdx0";
+			string_R[0b011011] = "pgreg";
+			string_R[0b011100] = "unk28";
+			string_R[0b011101] = "unk29";
+			string_R[0b011111] = "unk31";
+			string_R[0b100010] = "unk34";
+			string_R[0b100010] = "unk35";
+			string_R[0b100110] = "drc";
+			string_R[0b100111] = "unk39";
+			string_R[0b101000] = "cbita";
+			string_R[0b101001] = "sbita";
+			string_R[0b101111] = "unk47";
+			string_R[0b110110] = "cbitb";
+			string_R[0b110111] = "sbitb";
+			string_R[0b111000] = "cbitc";
+			string_R[0b111001] = "sbitc";
+			string_R[0b111010] = "timer1";
+			string_R[0b111011] = "sdx1";
+			string_R[0b111100] = "sdx2";
+			string_R[0b111101] = "unk61";
+			string_R[0b111110] = "unk62";
+			break;
+		case CPU_DSP_1610:
+			string_R[0b001110] = "pdx2";
+			string_R[0b001111] = "pdx3";
+			string_R[0b011100] = "pioc";
+			string_R[0b011110] = "pdx1";
+			string_R[0b100110] = "unk38";
+			string_R[0b101100] = "pdx4";
+			string_R[0b101101] = "pdx5";
+			string_R[0b101110] = "pdx6";
+			string_R[0b101111] = "pdx7";
+			string_R[0b110110] = "unk54";
+			string_R[0b110111] = "unk55";
+			string_R[0b111000] = "unk56";
+			string_R[0b111001] = "unk57";
+			string_R[0b111110] = "unk62";
+			break;
 		case CPU_DSP_1611:
 			string_R[0b001110] = "unk14";
 			string_R[0b101111] = "unk47";
@@ -292,6 +360,37 @@ void fix_R(unsigned cpu) {
 			string_R[0b101111] = "unk47";
 			string_R[0b111001] = "unk57";
 			string_R[0b111110] = "unk62";
+			break;
+		case CPU_DSP_1650:
+			string_R[0b001110] = "unk14";
+			string_R[0b001111] = "sbitd";
+			string_R[0b011000] = "cdcpg";
+			string_R[0b011001] = "cdcamux";
+			string_R[0b011010] = "adc1/spkr";
+			string_R[0b011011] = "preg";
+			string_R[0b011100] = "ssid";
+			string_R[0b011101] = "ssic";
+			string_R[0b011110] = "chipc";
+			string_R[0b100010] = "pllc";
+			string_R[0b100011] = "clkc";
+			string_R[0b100110] = "drc";
+			string_R[0b100111] = "wdogr";
+			string_R[0b101000] = "cbita/iopuca";
+			string_R[0b101001] = "sbita";
+			string_R[0b101010] = "chipo";
+			string_R[0b101100] = "cbite/iopuce";
+			string_R[0b101101] = "sbite";
+			string_R[0b101110] = "cbite/iopuce";
+			string_R[0b101111] = "flashc";
+			string_R[0b110110] = "cbitb";
+			string_R[0b110111] = "sbitb";
+			string_R[0b111000] = "cbitc/iopucc";
+			string_R[0b111001] = "sbitc";
+			string_R[0b111010] = "timer1";
+			string_R[0b111011] = "line1/adc2";
+			string_R[0b111100] = "line2/adc3";
+			string_R[0b111101] = "adc4";
+			string_R[0b111110] = "cdc";
 			break;
 	}
 }

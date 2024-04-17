@@ -23,6 +23,18 @@ struct CPU cpu_list[CPU_DSP_COUNT] = {
 		.name = "generic",
 		.description = "Universal processor joining all features from rest of CPUs (default)"
 	} , {
+		.id = CPU_DSP_1604,
+		.name = "dsp1604",
+		.description = "AT&T DSP 1604"
+	} , {
+		.id = CPU_DSP_1606,
+		.name = "dsp1606",
+		.description = "AT&T DSP 1606"
+	} , {
+		.id = CPU_DSP_1610,
+		.name = "dsp1610",
+		.description = "AT&T DSP 1610"
+	} , {
 		.id = CPU_DSP_1611,
 		.name = "dsp1611",
 		.description = "Lucent DSP 1611"
@@ -46,6 +58,10 @@ struct CPU cpu_list[CPU_DSP_COUNT] = {
 		.id = CPU_DSP_1629,
 		.name = "dsp1629",
 		.description = "Lucent DSP 1629"
+	}, {
+		.id = CPU_DSP_1650,
+		.name = "dsp1650",
+		.description = "Lucent FlashDSP 1650"
 	}
 };
 

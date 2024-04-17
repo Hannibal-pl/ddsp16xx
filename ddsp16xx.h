@@ -27,13 +27,17 @@ PERFORMANCE OF THIS SOFTWARE.
 #define CPU_DESC_LENGTH		96
 
 #define CPU_DSP_GENERIC		0
-#define CPU_DSP_1611		1
-#define CPU_DSP_1617		2
-#define CPU_DSP_1618		3
-#define CPU_DSP_1627		4
-#define CPU_DSP_1628		5
-#define CPU_DSP_1629		6
-#define CPU_DSP_MAX		6
+#define CPU_DSP_1604		1
+#define CPU_DSP_1606		2
+#define CPU_DSP_1610		3
+#define CPU_DSP_1611		4
+#define CPU_DSP_1617		5
+#define CPU_DSP_1618		6
+#define CPU_DSP_1627		7
+#define CPU_DSP_1628		8
+#define CPU_DSP_1629		9
+#define CPU_DSP_1650		10
+#define CPU_DSP_MAX		10
 #define CPU_DSP_COUNT		(CPU_DSP_MAX + 1)
 
 
