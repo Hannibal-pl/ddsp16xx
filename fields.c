@@ -85,14 +85,14 @@ void fix_CON(unsigned cpu) {
 		case CPU_DSP_1611:
 		case CPU_DSP_1617:
 			string_CON[0b11100] = "unk28";
-			string_CON[0x11101] = "unk29";
+			string_CON[0b11101] = "unk29";
 			break;
 		case CPU_DSP_1618:
 			string_CON[0b11100] = "ebusy";
-			string_CON[0x11101] = "unk29";
+			string_CON[0b11101] = "unk29";
 		case CPU_DSP_1627:
 		case CPU_DSP_1629:
-			string_CON[0x11101] = "unk29";
+			string_CON[0b11101] = "unk29";
 			break;
 	}
 }

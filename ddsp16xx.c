@@ -169,6 +169,7 @@ void disassemble(void) {
 
 int main(int argc, char *argv[]) {
 	parseparams(argc, argv);
+	fix_cpu(context.cpu);
 
 	if (context.is_single) {
 		if (context.is_org_cmdline) {
