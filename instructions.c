@@ -206,14 +206,14 @@ void instr_b10010(uint16_t word) {
 	if (is_CON_true(instr.con)) {
 		field_F2(buf_F2, sizeof(buf_F2), instr.f2, instr.d, instr.s);
 		oprintf("%s\n", buf_F2);
-		oprintf("c2 = c1");
+		oprintf("c2 = c1\n");
 	} else if (!is_CON_false(instr.con)) {
 		oprintf("if %s {\n", field_CON(instr.con));
 		context.indent++;
 
 		field_F2(buf_F2, sizeof(buf_F2), instr.f2, instr.d, instr.s);
 		oprintf("%s\n", buf_F2);
-		oprintf("c2 = c1");
+		oprintf("c2 = c1\n");
 
 		context.indent--;
 		oprintf("}\n");
@@ -467,7 +467,7 @@ void instr_b11110(uint16_t word) {
 
 	if (instr9.bit5) {
 		if (instr9.rw) {
-			oprintf("%s = *(ybase + %002X)\n", field_DR(instr9.dr), instr9.offset);
+			oprintf("%s = *(ybase + 0x%02X)\n", field_DR(instr9.dr), instr9.offset);
 		} else {
 			oprintf("*(ybase + 0x%02X) = %s\n", instr9.offset, field_DR(instr9.dr));
 		}
