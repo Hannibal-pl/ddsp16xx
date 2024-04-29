@@ -190,10 +190,15 @@ int main(int argc, char *argv[]) {
 		fread(&org_start_file, sizeof(org_start_file), 1, context.file);
 		context.org_start = org_start_file;
 		if (context.ram_fix) {
-			context.org_start += 0xC000;
+			context.org_start = (context.org_start + 0xC000) & 0xFFFF;
 		}
 		context.org_cur = context.org_start - 1;
 	}
+
+	if (context.is_bin && context.ram_fix) {
+		context.start = (context.start + 0xC000) & 0xFFFF;
+	}
+
 
 	if (context.start < context.org_start) {
 		context.start = context.org_start;
@@ -207,8 +212,8 @@ int main(int argc, char *argv[]) {
 	printf("Filename:       %s\n", context.filename);
 	printf("Format:         %s\n", context.is_bin ? "bin" : "raw");
 	printf("Program size:   %u words\n", context.size);
-	printf("Orgin adress:   0x%04X%s\n", context.org_start, context.is_org_cmdline ? " (manual)" : "");
-	printf("Code adress:    0x%04X%s\n", context.start, context.is_start_cmdline ? " (manual)" : "");
+	printf("Orgin adress:   0x%04X%s%s\n", context.org_start, context.is_org_cmdline ? " (manual)" : "", (context.is_bin && context.ram_fix) ? " (ram_fix)" : "");
+	printf("Code adress:    0x%04X%s%s\n", context.start, context.is_start_cmdline ? " (manual)" : "", (context.is_bin && context.ram_fix) ? " (ram_fix)" : "");
 	printf("CPU type:       %s (%s)\n\n", get_cpu(context.cpu)->name, get_cpu(context.cpu)->description);
 	disassemble();
 

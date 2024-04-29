@@ -289,7 +289,7 @@ char *string_R [64] = {		"r0",
 				"alf"};
 
 char * field_R(unsigned r) {
-	return string_R[r & 0x1E];
+	return string_R[r & 0x1F];
 }
 
 void fix_R(unsigned cpu) {
@@ -362,9 +362,7 @@ void fix_R(unsigned cpu) {
 			string_R[0b111110] = "unk62";
 			break;
 		case CPU_DSP_164X: //guessed
-			string_R[0b010100] = "c0"; //almost for sure
-			string_R[0b010101] = "psw"; //this was in place of current c0 - wild guess
-			//probably more - suspected to be 1617 like
+			//suspected to be 1617 like
 			break;
 		case CPU_DSP_1650:
 			string_R[0b001110] = "unk14";

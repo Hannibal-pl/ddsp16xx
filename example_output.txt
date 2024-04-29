@@ -22,13 +22,13 @@ CPU type:       generic (Universal processor joining all features from rest of C
 0x180A:        goto 0x180C
 0x180A:    }
 0x180B:    return
-0x180C:    r0 = 0x1800
+0x180C:    r1 = 0x1800
 0x180E:    yl = *r1
 0x180F:    a0l = *r0
 0x1810:    a0 = a0 + y
 0x1811:    *r0 = a0l
 0x1812:    r0 = 0x0F20
-0x1814:    x = 0xD818
+0x1814:    y = 0xD818
 0x1816:    *r0 = yl
 0x1817:    return
 0x1818:    r0 = 0x0080
@@ -43,7 +43,7 @@ CPU type:       generic (Universal processor joining all features from rest of C
 0x181F:    a0 = a0h + 0x0080
 0x1821:    *r0 = a0l
 0x1822:    r0 = 0x0F20
-0x1824:    x = 0x42F8
+0x1824:    y = 0x42F8
 0x1826:    *r0 = yl
 0x1827:    return
 
