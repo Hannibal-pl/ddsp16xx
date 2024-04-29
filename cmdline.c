@@ -24,6 +24,7 @@ const struct option longopt[] = {
 	{"bin", 0, NULL, 'b'},
 	{"crc", 0, NULL, 'c'},
 	{"dsp", 1, NULL, 'd'},
+	{"ram-fix", 0, NULL, 'f'},
 	{"help", 0, NULL, 'h'},
 	{"hidden", 0, NULL, 'H'},
 	{"list-dsp", 0, NULL, 'l'},
@@ -39,7 +40,8 @@ void usage(char *appname) {
 				printf("\nUsage: %s [OPTIONS] filename\n", appname);
 				printf("  -b, --bin\t\tSet input file format to BIN, default.\n");
 				printf("  -c, --crc\t\tCheck input file control sum. BIN format only.\n");
-				printf("  -d, --dsp\t\tSelect DSP version. See oprion `-l` for list.\n");
+				printf("  -d, --dsp\t\tSelect DSP version. See option `-l` for list.\n");
+				printf("  -f, --ram-fix\t\tAdd 0xC000 to orgin from BIN file format.\n");
 				printf("  -h, --help\t\tPrint this help and exit.\n");
 				printf("  -H, --hidden\t\tShow hidden 'always true/false' conitional code.\n");
 				printf("  -l  --list-dsp\tList all supported DSPs and exit.\n");
@@ -55,7 +57,7 @@ void parseparams(int argc, char *argv[]) {
 	int opt;
 
 	while (true) {
-		opt = getopt_long(argc, argv, "bcd:hHlo:nrs:S:v?", longopt, NULL);
+		opt = getopt_long(argc, argv, "bcd:fhHlo:nrs:S:v?", longopt, NULL);
 		if (opt == -1) {
 			break;
 		}
@@ -76,6 +78,9 @@ void parseparams(int argc, char *argv[]) {
 					printf("Invalid DSP name '%s'. use option `-l` for list.\n", optarg);
 					exit(-1);
 				}
+				break;
+			case 'f':
+				context.ram_fix = true;
 				break;
 			case '?':
 			case 'h':

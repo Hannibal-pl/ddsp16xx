@@ -18,7 +18,8 @@ It supports two type of files:
  - BIN - default format used in Lucent Winmodem drivers for 164X DSPs, It have
 following format:
 
- -- 0x00: WORD - Data orgin.
+ -- 0x00: WORD - Data orgin. Probably not for entire address space, only for
+        RAM. RAM probably begins at 0xC000.
 
  -- 0X02: WORD - Size of data in words.
 

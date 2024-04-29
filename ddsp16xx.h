@@ -55,6 +55,7 @@ struct CONTEXT {
 	bool is_org;
 	bool is_org_cmdline;
 	bool is_start_cmdline;
+	bool ram_fix;
 	bool check_crc;
 	unsigned loop_n;
 	bool is_hidden;

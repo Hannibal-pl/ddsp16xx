@@ -32,6 +32,7 @@ struct CONTEXT context = {
 	.is_org = true,
 	.is_org_cmdline = false,
 	.is_start_cmdline = false,
+	.ram_fix = false,
 	.check_crc = false,
 	.loop_n = 0,
 	.is_hidden = true,
@@ -188,6 +189,9 @@ int main(int argc, char *argv[]) {
 		fseek(context.file, 0, SEEK_SET);
 		fread(&org_start_file, sizeof(org_start_file), 1, context.file);
 		context.org_start = org_start_file;
+		if (context.ram_fix) {
+			context.org_start += 0xC000;
+		}
 		context.org_cur = context.org_start - 1;
 	}
 
