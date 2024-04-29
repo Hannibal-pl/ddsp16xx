@@ -36,8 +36,9 @@ PERFORMANCE OF THIS SOFTWARE.
 #define CPU_DSP_1627		7
 #define CPU_DSP_1628		8
 #define CPU_DSP_1629		9
-#define CPU_DSP_1650		10
-#define CPU_DSP_MAX		10
+#define CPU_DSP_164X		10
+#define CPU_DSP_1650		11
+#define CPU_DSP_MAX		11
 #define CPU_DSP_COUNT		(CPU_DSP_MAX + 1)
 
 
@@ -45,9 +46,9 @@ struct CONTEXT {
 	FILE *file;
 	char *filename;
 	unsigned size;
-	uint16_t org_start;
-	uint16_t org_cur;
-	uint16_t start;
+	int32_t org_start;
+	int32_t org_cur;
+	int32_t start;
 	bool is_bin;
 	bool is_crc;
 	unsigned indent;

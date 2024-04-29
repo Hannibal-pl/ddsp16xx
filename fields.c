@@ -361,6 +361,11 @@ void fix_R(unsigned cpu) {
 			string_R[0b111001] = "unk57";
 			string_R[0b111110] = "unk62";
 			break;
+		case CPU_DSP_164X: //guessed
+			string_R[0b010100] = "c0"; //almost for sure
+			string_R[0b010101] = "psw"; //this was in place of current c0 - wild guess
+			//probably more - suspected to be 1617 like
+			break;
 		case CPU_DSP_1650:
 			string_R[0b001110] = "unk14";
 			string_R[0b001111] = "sbitd";

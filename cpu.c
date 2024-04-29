@@ -59,6 +59,10 @@ struct CPU cpu_list[CPU_DSP_COUNT] = {
 		.name = "dsp1629",
 		.description = "Lucent DSP 1629"
 	}, {
+		.id = CPU_DSP_164X,
+		.name = "dsp164x",
+		.description = "Lucent DSP 164X (guessed)"
+	}, {
 		.id = CPU_DSP_1650,
 		.name = "dsp1650",
 		.description = "Lucent FlashDSP 1650"
