@@ -184,8 +184,10 @@ int main(int argc, char *argv[]) {
 	context.size -= context.is_bin ? 3 : 0;
 
 	if (context.is_bin && !context.is_org_cmdline) {
+		uint16_t org_start_file = 0;
 		fseek(context.file, 0, SEEK_SET);
-		fread(&context.org_start, sizeof(context.org_start), 1, context.file);
+		fread(&org_start_file, sizeof(org_start_file), 1, context.file);
+		context.org_start = org_start_file;
 		context.org_cur = context.org_start - 1;
 	}
 
