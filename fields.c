@@ -292,6 +292,20 @@ char * field_R(unsigned r) {
 	return string_R[r & 0x1F];
 }
 
+char * field_R_ish(unsigned r) {
+	switch (r) {
+		case 0b001100: //p
+		case 0b010001: //y
+		case 0b110000: //a0
+		case 0b110010: //a1
+			return "h";
+			break;
+		default:
+			break;
+	}
+	return "";
+}
+
 void fix_R(unsigned cpu) {
 	switch (cpu) {
 		case CPU_DSP_1604:

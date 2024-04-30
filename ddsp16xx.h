@@ -250,6 +250,7 @@ extern unsigned field_F1(char *buf, unsigned bufsize, unsigned F1, unsigned D, u
 extern unsigned field_F2(char *buf, unsigned bufsize, unsigned F2, unsigned D, unsigned S);
 extern unsigned field_F3(char *buf, unsigned bufsize, unsigned F3, unsigned D, unsigned S, char *hl);
 extern char * field_R(unsigned r);
+extern char * field_R_ish(unsigned r);
 extern void fix_R(unsigned cpu);
 extern char * field_SR(unsigned sr);
 extern unsigned field_Y(char *buf, unsigned bufsize, unsigned reg, unsigned op);

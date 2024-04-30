@@ -128,7 +128,7 @@ void instr_b01010(uint16_t word) {
 	union INSTR_F8 instr;
 
 	instr.i = word;
-	oprintf("%s = ", field_R(instr.r));
+	oprintf("%s%s = ", field_R(instr.r), field_R_ish(instr.r));
 	printf("0x%04X\n", next_word());
 }
 
