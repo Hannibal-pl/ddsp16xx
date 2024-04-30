@@ -52,7 +52,7 @@ void instr_b00100(uint16_t word) {
 	length += field_Y(buf_Y, sizeof(buf_Y), instr.yzReg, instr.yzOp);
 
 	oprintbuf(buf_F1);
-	oprintf("*r%i = a1%s\n", instr.yzReg, instr.x ? "l" : "");
+	oprintf("*r%i = a1%s\n", instr.yzReg, instr.x ? "h" : "l");
 	oprintbuf(buf_Y);
 }
 
@@ -66,8 +66,8 @@ void instr_b00101(uint16_t word) {
 	field_F1(buf_F1, sizeof(buf_F1), instr.f1, instr.d, instr.s);
 	oprintbuf(buf_F1);
 
-	oprintf("tmp = a%c%s\n", '1' - instr.d, instr.x ? "l" : "");
-	oprintf("a%c%s = *r%i\n", '1' - instr.d, instr.x ? "l" : "", instr.yzReg);
+	oprintf("tmp = a%c%s\n", '1' - instr.d, instr.x ? "h" : "l");
+	oprintf("a%c%s = *r%i\n", '1' - instr.d, instr.x ? "h" : "l", instr.yzReg);
 	field_Z1(buf_Z, sizeof(buf_Z), instr.yzReg, instr.yzOp);
 	oprintbuf(buf_Z);
 	oprintf("*r%i = tmp\n", instr.yzReg);
@@ -106,7 +106,7 @@ void instr_b00111(uint16_t word) {
 	field_Y(buf_Y, sizeof(buf_Y), instr.yzReg, instr.yzOp);
 
 	oprintbuf(buf_F1);
-	oprintf("a%c%s = *r%i\n", '1' - instr.d, instr.x ? "l" : "", instr.yzReg);
+	oprintf("a%c%s = *r%i\n", '1' - instr.d, instr.x ? "h" : "l", instr.yzReg);
 	oprintbuf(buf_Y);
 }
 
@@ -114,14 +114,14 @@ void instr_b01000(uint16_t word) {
 	union INSTR_F7a instr;
 
 	instr.i = word;
-	oprintf("a%c%s = %s\n", '1' - instr.aT, instr.x ? "l" : "", field_R(instr.r));
+	oprintf("a%c%s = %s\n", '1' - instr.aT, instr.x ? "h" : "l", field_R(instr.r));
 }
 
 void instr_b01001(uint16_t word) {
 	union INSTR_F7b instr;
 
 	instr.i = word;
-	oprintf("%s = a%c%s\n", field_R(instr.r), '0' + instr.s, instr.x ? "l" : "");
+	oprintf("%s = a%c%s\n", field_R(instr.r), '0' + instr.s, instr.x ? "h" : "l");
 }
 
 void instr_b01010(uint16_t word) {
@@ -258,7 +258,7 @@ void instr_b10100(uint16_t word) {
 	length += field_Y(buf_Y, sizeof(buf_Y), instr.yzReg, instr.yzOp);
 
 	oprintbuf(buf_F1);
-	oprintf("*r%i = y%s\n", instr.yzReg, instr.x ? "l" : "");
+	oprintf("*r%i = y%s\n", instr.yzReg, instr.x ? "h" : "l");
 	oprintbuf(buf_Y);
 }
 
@@ -272,8 +272,8 @@ void instr_b10101(uint16_t word) {
 	field_F1(buf_F1, sizeof(buf_F1), instr.f1, instr.d, instr.s);
 	oprintbuf(buf_F1);
 
-	oprintf("tmp = y%s\n", instr.x ? "l" : "");
-	oprintf("y%s = *r%i\n", instr.x ? "l" : "", instr.yzReg);
+	oprintf("tmp = y%s\n", instr.x ? "h" : "l");
+	oprintf("y%s = *r%i\n", instr.x ? "h" : "l", instr.yzReg);
 	field_Z1(buf_Z, sizeof(buf_Z), instr.yzReg, instr.yzOp);
 	oprintbuf(buf_Z);
 	oprintf("*r%i = tmp\n", instr.yzReg);
@@ -309,7 +309,7 @@ void instr_b10111(uint16_t word) {
 	length += field_Y(buf_Y, sizeof(buf_Y), instr.yzReg, instr.yzOp);
 
 	oprintbuf(buf_F1);
-	oprintf("y%s = *r%i\n", instr.x ? "l" : "", instr.yzReg);
+	oprintf("y%s = *r%i\n", instr.x ? "h" : "l", instr.yzReg);
 	oprintbuf(buf_Y);
 }
 
@@ -437,7 +437,7 @@ void instr_b11100(uint16_t word) {
 	length += field_Y(buf_Y, sizeof(buf_Y), instr.yzReg, instr.yzOp);
 
 	oprintbuf(buf_F1);
-	oprintf("*r%i = a0%s\n", instr.yzReg, instr.x ? "l" : "");
+	oprintf("*r%i = a0%s\n", instr.yzReg, instr.x ? "h" : "l");
 	oprintbuf(buf_Y);
 }
 
