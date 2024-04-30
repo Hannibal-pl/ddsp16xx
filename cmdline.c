@@ -22,6 +22,7 @@ PERFORMANCE OF THIS SOFTWARE.
 
 const struct option longopt[] = {
 	{"bin", 0, NULL, 'b'},
+	{"data-in-bin", 0, NULL, 'B'},
 	{"crc", 0, NULL, 'c'},
 	{"dsp", 1, NULL, 'd'},
 	{"ram-fix", 0, NULL, 'f'},
@@ -39,6 +40,7 @@ const struct option longopt[] = {
 void usage(char *appname) {
 				printf("\nUsage: %s [OPTIONS] filename\n", appname);
 				printf("  -b, --bin\t\tSet input file format to BIN, default.\n");
+				printf("  -B, --data-in-bin\tDisplay data in binary format instead of hex.\n");
 				printf("  -c, --crc\t\tCheck input file control sum. BIN format only.\n");
 				printf("  -d, --dsp\t\tSelect DSP version. See option `-l` for list.\n");
 				printf("  -f, --ram-fix\t\tAdd 0xC000 to orgin from BIN file format.\n");
@@ -57,7 +59,7 @@ void parseparams(int argc, char *argv[]) {
 	int opt;
 
 	while (true) {
-		opt = getopt_long(argc, argv, "bcd:fhHlo:nrs:S:v?", longopt, NULL);
+		opt = getopt_long(argc, argv, "bBcd:fhHlo:nrs:S:v?", longopt, NULL);
 		if (opt == -1) {
 			break;
 		}
@@ -65,6 +67,9 @@ void parseparams(int argc, char *argv[]) {
 		switch (opt) {
 			case 'b':
 				context.is_bin = true;
+				break;
+			case 'B':
+				context.data_bin = true;
 				break;
 			case 'c':
 				context.check_crc = true;

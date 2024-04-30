@@ -62,6 +62,7 @@ struct CONTEXT {
 	unsigned cpu;
 	bool is_single;
 	uint32_t single;
+	bool data_bin;
 };
 
 struct CPU {

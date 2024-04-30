@@ -38,7 +38,8 @@ struct CONTEXT context = {
 	.is_hidden = true,
 	.cpu = CPU_DSP_GENERIC,
 	.is_single = false,
-	.single = 0
+	.single = 0,
+	.data_bin = false
 };
 
 void disassemble_one(uint16_t wordu) {

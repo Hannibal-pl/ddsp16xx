@@ -19,7 +19,11 @@ PERFORMANCE OF THIS SOFTWARE.
 #include "ddsp16xx.h"
 
 void instr_data(uint16_t word) {
-	oprintf("WORD 0x%04X\n", word);
+	if (context.data_bin) {
+		oprintf("WORD 0b%016b\n", word);
+	} else {
+		oprintf("WORD 0x%04X\n", word);
+	}
 }
 
 void instr_b00000(uint16_t word) {
