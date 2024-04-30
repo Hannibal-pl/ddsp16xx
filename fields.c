@@ -289,11 +289,11 @@ char *string_R [64] = {		"r0",
 				"alf"};
 
 char * field_R(unsigned r) {
-	return string_R[r & 0x1F];
+	return string_R[r & 0x3F];
 }
 
 char * field_R_ish(unsigned r) {
-	switch (r) {
+	switch (r & 0x3F) {
 		case 0b001100: //p
 		case 0b010001: //y
 		case 0b110000: //a0
