@@ -114,14 +114,14 @@ void instr_b01000(uint16_t word) {
 	union INSTR_F7a instr;
 
 	instr.i = word;
-	oprintf("a%c%s = %s\n", '1' - instr.aT, instr.x ? "h" : "l", field_R(instr.r));
+	oprintf("a%c%s = %s\n", '1' - instr.aT, instr.x ? "l" : "h", field_R(instr.r));
 }
 
 void instr_b01001(uint16_t word) {
 	union INSTR_F7b instr;
 
 	instr.i = word;
-	oprintf("%s = a%c%s\n", field_R(instr.r), '0' + instr.s, instr.x ? "h" : "l");
+	oprintf("%s = a%c%s\n", field_R(instr.r), '0' + instr.s, instr.x ? "l" : "h");
 }
 
 void instr_b01010(uint16_t word) {
