@@ -376,7 +376,7 @@ void fix_R(unsigned cpu) {
 			string_R[0b111110] = "unk62";
 			break;
 		case CPU_DSP_164X: //guessed
-			//suspected to be 1617 like
+			//suspected to be 1650 like
 			break;
 		case CPU_DSP_1650:
 			string_R[0b001110] = "unk14";
@@ -397,7 +397,7 @@ void fix_R(unsigned cpu) {
 			string_R[0b101010] = "chipo";
 			string_R[0b101100] = "cbite/iopuce";
 			string_R[0b101101] = "sbite";
-			string_R[0b101110] = "cbite/iopuce";
+			string_R[0b101110] = "cbitd/iopucd";
 			string_R[0b101111] = "flashc";
 			string_R[0b110110] = "cbitb";
 			string_R[0b110111] = "sbitb";
