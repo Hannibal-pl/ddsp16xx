@@ -358,7 +358,6 @@ void instr_b11001(uint16_t word) {
 	field_F1(buf_F1, sizeof(buf_F1), instr.f1, instr.d, instr.s);
 	oprintbuf(buf_F1);
 
-	oprintf("tmp = y\n");
 	oprintf("y = a0\n");
 	oprintf("x = *pt\n");
 	oprintf("pt++%s\n", instr.x ? "i" : "");
@@ -419,7 +418,6 @@ void instr_b11011(uint16_t word) {
 	field_F1(buf_F1, sizeof(buf_F1), instr.f1, instr.d, instr.s);
 	oprintbuf(buf_F1);
 
-	oprintf("tmp = y\n");
 	oprintf("y = a1\n");
 	oprintf("x = *pt\n");
 	oprintf("pt++%s\n", instr.x ? "i" : "");
