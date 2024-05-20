@@ -331,7 +331,7 @@ void instr_b11000(uint16_t word) {
 				snprintf(buf_src2, sizeof(buf_src2), "0x%04X", next_word());
 				break;
 			case 0b01:
-				snprintf(buf_src2, sizeof(buf_src2), "a%c", '1' - instr3.aT);
+				snprintf(buf_src2, sizeof(buf_src2), "a%c", '0' + instr3.aT);
 				break;
 			case 0b10:
 				hl = "h";

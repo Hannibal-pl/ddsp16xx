@@ -174,9 +174,7 @@ int main(int argc, char *argv[]) {
 	fix_cpu(context.cpu);
 
 	if (context.is_single) {
-		if (context.is_org_cmdline) {
-			context.org_cur++;
-		}
+		context.org_cur++;
 		disassemble_one(context.single & 0xFFFF);
 		return 0;
 	}
