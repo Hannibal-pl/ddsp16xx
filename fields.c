@@ -150,10 +150,10 @@ char * field_DR(unsigned dr) {
 
 
 
-char *format_F1 [16] = {	"p = x * y#a%1$i = p",
-				"p = x * y#a%1$i = a%2$i + p",
+char *format_F1 [16] = {	"a%1$i = p#p = x * y",
+				"a%1$i = a%2$i + p#p = x * y",
 				"p = x * y",
-				"p = x * y#a%1$i = a%2$i - p",
+				"a%1$i = a%2$i - p#p = x * y",
 				"a%1$i = p",
 				"a%1$i = a%2$i + p",
 				"",
