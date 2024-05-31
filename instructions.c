@@ -37,7 +37,7 @@ void instr_b00010(uint16_t word) {
 	union INSTR_F9 instr;
 
 	instr.i = word;
-	oprintf("%s = 0x%04X\n", field_SR(instr.sr), instr.im9);
+	oprintf("%s = 0x%04X\n", field_SR(instr.sr), val_SR(instr.sr, instr.im9));
 }
 
 void instr_b00100(uint16_t word) {

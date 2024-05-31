@@ -253,6 +253,7 @@ extern char * field_R(unsigned r);
 extern char * field_R_ish(unsigned r);
 extern void fix_R(unsigned cpu);
 extern char * field_SR(unsigned sr);
+extern uint16_t val_SR(unsigned sr, uint16_t val);
 extern unsigned field_Y(char *buf, unsigned bufsize, unsigned reg, unsigned op);
 extern unsigned field_Z1(char *buf, unsigned bufsize, unsigned reg, unsigned op);
 extern unsigned field_Z2(char *buf, unsigned bufsize, unsigned reg, unsigned op);

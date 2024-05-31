@@ -429,6 +429,18 @@ char * field_SR(unsigned sr) {
 	return string_SR[sr & 0x7];
 }
 
+uint16_t val_SR(unsigned sr, uint16_t val) { // j & k are sign extended
+	if (sr > 1) {
+		return val;
+	}
+
+	if (val & 0x0100) { //9 value sign
+		return val | 0xFE00;
+	} else {
+		return val;
+	}
+}
+
 
 
 
