@@ -63,10 +63,17 @@ void instr_b00101(uint16_t word) {
 
 	instr.i = word;
 
+	if (instr.d != instr.s) { // fine print cpu pipelingig issue
+		oprintf("tmp = a%c%s\n", '1' - instr.d, instr.x ? "h" : "l");
+	}
+
 	field_F1(buf_F1, sizeof(buf_F1), instr.f1, instr.d, instr.s);
 	oprintbuf(buf_F1);
 
-	oprintf("tmp = a%c%s\n", '1' - instr.d, instr.x ? "h" : "l");
+	if (instr.d == instr.s) { // fine print cpu pipelingig issue
+		oprintf("tmp = a%c%s\n", '1' - instr.d, instr.x ? "h" : "l");
+	}
+
 	oprintf("a%c%s = *r%i\n", '1' - instr.d, instr.x ? "h" : "l", instr.yzReg);
 	field_Z1(buf_Z, sizeof(buf_Z), instr.yzReg, instr.yzOp);
 	oprintbuf(buf_Z);
@@ -355,10 +362,11 @@ void instr_b11001(uint16_t word) {
 
 	instr.i = word;
 
+	oprintf("y = a0\n"); // fine print cpu pipelingig issue
+
 	field_F1(buf_F1, sizeof(buf_F1), instr.f1, instr.d, instr.s);
 	oprintbuf(buf_F1);
 
-	oprintf("y = a0\n");
 	oprintf("x = *pt\n");
 	oprintf("pt++%s\n", instr.x ? "i" : "");
 }
@@ -415,10 +423,11 @@ void instr_b11011(uint16_t word) {
 
 	instr.i = word;
 
+	oprintf("y = a1\n"); // fine print cpu pipelingig issue
+
 	field_F1(buf_F1, sizeof(buf_F1), instr.f1, instr.d, instr.s);
 	oprintbuf(buf_F1);
 
-	oprintf("y = a1\n");
 	oprintf("x = *pt\n");
 	oprintf("pt++%s\n", instr.x ? "i" : "");
 }
