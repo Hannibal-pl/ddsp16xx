@@ -459,7 +459,7 @@ void instr_b11101(uint16_t word) {
 	oprintbuf(buf_F1);
 
 	oprintf("tmp = y\n");
-	oprintf("y = *r%i\n", instr.yzReg);
+	oprintf("yh = *r%i\n", instr.yzReg);
 	field_Z1(buf_Z, sizeof(buf_Z), instr.yzReg, instr.yzOp);
 	oprintbuf(buf_Z);
 	oprintf("*r%i = tmp\n", instr.yzReg);
@@ -573,7 +573,7 @@ void instr_b11111(uint16_t word) {
 	length += field_Y(buf_Y, sizeof(buf_Y), instr.yzReg, instr.yzOp);
 
 	oprintbuf(buf_F1);
-	oprintf("y = *r%i\n", instr.yzReg);
+	oprintf("yh = *r%i\n", instr.yzReg);
 	oprintbuf(buf_Y);
 	oprintf("x = *pt\n");
 	oprintf("pt++%s\n", instr.x ? "i" : "");
