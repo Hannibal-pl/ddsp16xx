@@ -362,7 +362,7 @@ void instr_b11001(uint16_t word) {
 
 	instr.i = word;
 
-	oprintf("y = a0\n"); // fine print cpu pipelingig issue
+	oprintf("y = a0h\n"); // fine print cpu pipelingig issue
 
 	field_F1(buf_F1, sizeof(buf_F1), instr.f1, instr.d, instr.s);
 	oprintbuf(buf_F1);
@@ -423,7 +423,7 @@ void instr_b11011(uint16_t word) {
 
 	instr.i = word;
 
-	oprintf("y = a1\n"); // fine print cpu pipelingig issue
+	oprintf("y = a1h\n"); // fine print cpu pipelingig issue
 
 	field_F1(buf_F1, sizeof(buf_F1), instr.f1, instr.d, instr.s);
 	oprintbuf(buf_F1);
