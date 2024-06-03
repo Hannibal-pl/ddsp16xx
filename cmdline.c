@@ -17,6 +17,7 @@ PERFORMANCE OF THIS SOFTWARE.
 #include <stdlib.h>
 #include <string.h>
 #include <getopt.h>
+#include <libgen.h>
 
 #include "ddsp16xx.h"
 
@@ -148,7 +149,7 @@ void parseparams(int argc, char *argv[]) {
 				context.is_single = true;
 				break;
 			case 'v':
-				printf("%s: version: %s\n", argv[0], VERSION);
+				printf("%s: version: %s\n", basename(argv[0]), VERSION);
 				exit(0);
 				break;
 		}

@@ -21,7 +21,7 @@ PERFORMANCE OF THIS SOFTWARE.
 #include <stdbool.h>
 #include <stdio.h>
 
-#define VERSION			"0.9.0"
+#define VERSION			"0.9.1"
 
 #define CPU_NAME_LENGTH		16
 #define CPU_DESC_LENGTH		96
