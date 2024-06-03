@@ -25,6 +25,7 @@ const struct option longopt[] = {
 	{"data-in-bin", 0, NULL, 'B'},
 	{"crc", 0, NULL, 'c'},
 	{"dsp", 1, NULL, 'd'},
+	{"debug-instruction", 0, NULL, 'D'},
 	{"ram-fix", 0, NULL, 'f'},
 	{"help", 0, NULL, 'h'},
 	{"hidden", 0, NULL, 'H'},
@@ -39,27 +40,28 @@ const struct option longopt[] = {
 
 void usage(char *appname) {
 				printf("\nUsage: %s [OPTIONS] filename\n", appname);
-				printf("  -b, --bin\t\tSet input file format to BIN, default.\n");
-				printf("  -B, --data-in-bin\tDisplay data in binary format instead of hex.\n");
-				printf("  -c, --crc\t\tCheck input file control sum. BIN format only.\n");
-				printf("  -d, --dsp\t\tSelect DSP version. See option `-l` for list.\n");
-				printf("  -f, --ram-fix\t\tAdd 0xC000 to orgin from BIN file format.\n");
-				printf("  -h, --help\t\tPrint this help and exit.\n");
-				printf("  -H, --hidden\t\tShow hidden 'always true/false' conitional code.\n");
-				printf("  -l  --list-dsp\tList all supported DSPs and exit.\n");
-				printf("  -n  --no-lablel\tDon't print line addres lables.\n");
-				printf("  -o, --orgin=ADDRESS\tOverwrite default file orgin.\n");
-				printf("  -r, --raw\t\tSet input file format to RAW.\n");
-				printf("  -s, --start=ADDRESS\tCode start addres. Data before it won't be dissassebled.\n");
-				printf("  -S, --single=OPCODE\tDissassemble single opcode OPCODE.\n");
-				printf("  -v, --version\t\tPrint version number and exit.\n\n");
+				printf("  -b, --bin\t\t\tSet input file format to BIN, default.\n");
+				printf("  -B, --data-in-bin\t\tDisplay data in binary format instead of hex.\n");
+				printf("  -c, --crc\t\t\tCheck input file control sum. BIN format only.\n");
+				printf("  -d, --dsp\t\t\tSelect DSP version. See option `-l` for list.\n");
+				printf("  -D, --debug-instruction\tDisplay binary value of instruction before it.\n");
+				printf("  -f, --ram-fix\t\t\tAdd 0xC000 to orgin from BIN file format.\n");
+				printf("  -h, --help\t\t\tPrint this help and exit.\n");
+				printf("  -H, --hidden\t\t\tShow hidden 'always true/false' conitional code.\n");
+				printf("  -l  --list-dsp\t\tList all supported DSPs and exit.\n");
+				printf("  -n  --no-lablel\t\tDon't print line addres lables.\n");
+				printf("  -o, --orgin=ADDRESS\t\tOverwrite default file orgin.\n");
+				printf("  -r, --raw\t\t\tSet input file format to RAW.\n");
+				printf("  -s, --start=ADDRESS\t\tCode start addres. Data before it won't be dissassebled.\n");
+				printf("  -S, --single=OPCODE\t\tDissassemble single opcode OPCODE.\n");
+				printf("  -v, --version\t\t\tPrint version number and exit.\n\n");
 }
 
 void parseparams(int argc, char *argv[]) {
 	int opt;
 
 	while (true) {
-		opt = getopt_long(argc, argv, "bBcd:fhHlo:nrs:S:v?", longopt, NULL);
+		opt = getopt_long(argc, argv, "bBcd:DfhHlo:nrs:S:v?", longopt, NULL);
 		if (opt == -1) {
 			break;
 		}
@@ -83,6 +85,9 @@ void parseparams(int argc, char *argv[]) {
 					printf("Invalid DSP name '%s'. use option `-l` for list.\n", optarg);
 					exit(-1);
 				}
+				break;
+			case 'D':
+				context.debug_instruction = true;
 				break;
 			case 'f':
 				context.ram_fix = true;

@@ -94,3 +94,15 @@ void check_crc(void) {
 
 	fseek(context.file, fpos, SEEK_SET);
 }
+
+void debug_instruction(uint16_t word) {
+	if (!context.debug_instruction) {
+		return;
+	}
+
+	oprintf("// %04b ", (word >> 12) & 0x000F);
+	printf("%04b ", (word >> 8) & 0x000F);
+	printf("%04b ", (word >> 4) & 0x000F);
+	printf("%04b\n", word & 0x000F);
+
+}

@@ -39,7 +39,8 @@ struct CONTEXT context = {
 	.cpu = CPU_DSP_GENERIC,
 	.is_single = false,
 	.single = 0,
-	.data_bin = false
+	.data_bin = false,
+	.debug_instruction = false
 };
 
 void disassemble_one(uint16_t wordu) {
@@ -47,6 +48,7 @@ void disassemble_one(uint16_t wordu) {
 
 	word.i = wordu;
 //	oprintf("INSTR 0b%05b\n", word.t);
+	debug_instruction(wordu);
 	switch (word.t) {
 		case 0b00000:
 		case 0b00001:

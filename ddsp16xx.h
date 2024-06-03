@@ -63,6 +63,7 @@ struct CONTEXT {
 	bool is_single;
 	uint32_t single;
 	bool data_bin;
+	bool debug_instruction;
 };
 
 struct CPU {
@@ -239,6 +240,7 @@ extern uint16_t get_page(void);
 extern void oprintf(char* format, ...);
 extern void oprintbuf(char *buf);
 extern void check_crc(void);
+extern void debug_instruction(uint16_t word);
 //fields:
 extern unsigned field_B(char *buf, unsigned bufsize, unsigned B);
 extern char * field_CON(unsigned con);
