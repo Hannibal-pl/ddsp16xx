@@ -383,7 +383,7 @@ void instr_b11010(uint16_t word) {
 	oprintf("test()\n");
 
 	if (is_CON_false(instr.con)) {
-		next_word(); //fetch control instruction
+		debug_instruction(next_word()); //fetch control instruction
 		return;
 	}
 
@@ -393,6 +393,7 @@ void instr_b11010(uint16_t word) {
 	}
 
 	control_instr.i = next_word();
+	debug_instruction(control_instr.i);
 	switch (control_instr.t) {
 		case 0b00000:
 		case 0b00001:

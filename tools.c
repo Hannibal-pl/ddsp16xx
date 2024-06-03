@@ -33,6 +33,14 @@ uint16_t next_word(void) {
 	return word;
 }
 
+uint16_t lookahead_word(void) {
+	uint16_t word;
+	fread(&word, sizeof(word), 1, context.file);
+	fseek(context.file, -sizeof(word), SEEK_CUR);
+
+	return word;
+}
+
 uint16_t get_page(void) {
 	return (context.org_cur & 0xF000);
 }
@@ -103,6 +111,17 @@ void debug_instruction(uint16_t word) {
 	oprintf("// %04b ", (word >> 12) & 0x000F);
 	printf("%04b ", (word >> 8) & 0x000F);
 	printf("%04b ", (word >> 4) & 0x000F);
-	printf("%04b\n", word & 0x000F);
+	printf("%04b", word & 0x000F);
+
+	//second word
+	if (((word & 0xF800) == 0x5000) || ((word & 0xF809) == 0xC001) || ((word & 0xF9A0) == 0xF180)) {
+		uint16_t second = lookahead_word();
+		printf("        %04b ", (second >> 12) & 0x000F);
+		printf("%04b ", (second >> 8) & 0x000F);
+		printf("%04b ", (second >> 4) & 0x000F);
+		printf("%04b", second & 0x000F);
+	}
+
+	printf("\n");
 
 }
