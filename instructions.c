@@ -51,9 +51,9 @@ void instr_b00100(uint16_t word) {
 	length += field_F1(buf_F1, sizeof(buf_F1), instr.f1, instr.d, instr.s);
 	length += field_Y(buf_Y, sizeof(buf_Y), instr.yzReg, instr.yzOp);
 
-	oprintbuf(buf_F1);
 	oprintf("*r%i = a1%s\n", instr.yzReg, instr.x ? "h" : "l");
 	oprintbuf(buf_Y);
+	oprintbuf(buf_F1);
 }
 
 void instr_b00101(uint16_t word) {
@@ -443,9 +443,9 @@ void instr_b11100(uint16_t word) {
 	length += field_F1(buf_F1, sizeof(buf_F1), instr.f1, instr.d, instr.s);
 	length += field_Y(buf_Y, sizeof(buf_Y), instr.yzReg, instr.yzOp);
 
-	oprintbuf(buf_F1);
 	oprintf("*r%i = a0%s\n", instr.yzReg, instr.x ? "h" : "l");
 	oprintbuf(buf_Y);
+	oprintbuf(buf_F1);
 }
 
 void instr_b11101(uint16_t word) {
