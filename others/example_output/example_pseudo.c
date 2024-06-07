@@ -1,9 +1,13 @@
+#include <stdint.h>
+
 extern int16_t w_007F;
 extern int16_t w_0080;
-extern (void)(*f_0F20)(void);
-extern (void)(*f_42F8)(void);
+extern void (*f_0F20)(void);
+extern void (*f_42F8)(void);
 
-#define XFIX (x + 0xC000)
+#define XFIX(x) (x + 0xC000)
+
+void f_1818(void);
 
 int16_t w_1800 = 0x000C;
 
