@@ -95,7 +95,7 @@ void parseparams(int argc, char *argv[]) {
 				break;
 			case '?':
 			case 'h':
-				usage(argv[0]);
+				usage(basename(argv[0]));
 				exit(0);
 				break;
 			case 'H':
@@ -164,7 +164,7 @@ void parseparams(int argc, char *argv[]) {
 		printf("You must provide input filename.\n");
 		if (argc == 1) {
 			//no options at all
-			usage(argv[0]);
+			usage(basename(argv[0]));
 		}
 		exit(-1);
 	}
